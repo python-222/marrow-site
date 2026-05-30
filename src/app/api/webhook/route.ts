@@ -136,7 +136,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     try {
       await resend.emails.send({
-        from: "Marrow Library <licenses@marrowlibrary.app>",
+        from: "Marrow Library <onboarding@resend.dev>",
         to: email,
         subject: `Your Marrow Library ${tier} License & Download Links`,
         html: licenseEmailHtml(licenseKey, tier, email, siteUrl),
