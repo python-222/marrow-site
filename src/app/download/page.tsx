@@ -165,16 +165,19 @@ export default function DownloadPage() {
                   className="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"
                   style={{ background: "rgba(99,102,241,0.2)", color: "#a5b4fc", border: "1px solid rgba(99,102,241,0.4)" }}
                 >
-                  ★ Premium
+                  🔥 Full Access
                 </span>
                 <div className="text-right">
-                  <span className="text-2xl font-black text-white">$49</span>
-                  <span className="text-sm ml-1" style={{ color: "#71717a" }}>/yr</span>
+                  <div className="text-xs font-semibold mb-0.5" style={{ color: "#4ade80" }}>3 months free</div>
+                  <div>
+                    <span className="text-2xl font-black text-white">$20</span>
+                    <span className="text-sm ml-1" style={{ color: "#71717a" }}>once</span>
+                  </div>
                 </div>
               </div>
-              <h2 className="text-xl font-bold text-white mb-1">Marrow Library Collector</h2>
+              <h2 className="text-xl font-bold text-white mb-1">Marrow Library Full</h2>
               <p className="text-sm" style={{ color: "#a1a1aa" }}>
-                The full experience. Unlimited items, live valuations, backup, and lending.
+                Try free for 3 months — no card needed. Then just $20 once to own it forever.
               </p>
             </div>
 
@@ -208,12 +211,12 @@ export default function DownloadPage() {
               <Link
                 href="/#pricing"
                 className="flex items-center justify-center gap-2 w-full px-4 py-3.5 rounded-xl text-sm font-bold text-white text-center transition-all hover:opacity-90"
-                style={{ background: "linear-gradient(135deg, #4f46e5, #7c3aed)" }}
+                style={{ background: "linear-gradient(135deg, #5b52f0, #7c74f5)" }}
               >
-                Unlock Premium — $49/yr →
+                Start Free — 3 Months on Us →
               </Link>
               <p className="text-center text-xs mt-3" style={{ color: "#52525b" }}>
-                Also available monthly ($5.99) or lifetime ($79)
+                No card for trial · $20 one-time after 3 months · no subscription
               </p>
             </div>
           </div>

@@ -7,7 +7,7 @@ import Pricing from "@/components/Pricing";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
-const SITE_URL = "https://marrow-library-marketing-site.vercel.app";
+const SITE_URL = "https://marrow-site.vercel.app";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -19,9 +19,7 @@ const jsonLd = {
       operatingSystem: "macOS, Windows, Android, iOS",
       offers: [
         { "@type": "Offer", price: "0", priceCurrency: "USD", name: "Free" },
-        { "@type": "Offer", price: "49", priceCurrency: "USD", name: "Collector Annual" },
-        { "@type": "Offer", price: "99", priceCurrency: "USD", name: "Curator Annual" },
-        { "@type": "Offer", price: "79", priceCurrency: "USD", name: "Collector Lifetime" },
+        { "@type": "Offer", price: "20", priceCurrency: "USD", name: "Full Access (3 months free, then $20 once)" },
       ],
       description:
         "Marrow Library is a collection cataloging app for books, vinyl records, video games, movies, board games, and more. Scan barcodes, track live eBay market values, and manage your entire collection on Mac, Windows, Android and iOS.",

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-const SITE_URL = "https://marrow-library-marketing-site.vercel.app";
+const SITE_URL = "https://marrow-site.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -50,9 +50,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" style={{ background: "#050510", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
+    <html lang="en" style={{ background: "#02020a", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
       <head>
-        <meta name="theme-color" content="#050510" />
+        <meta name="theme-color" content="#02020a" />
       </head>
       <body>{children}</body>
     </html>
