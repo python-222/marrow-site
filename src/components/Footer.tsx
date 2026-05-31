@@ -1,46 +1,53 @@
 import Link from "next/link";
 
+const links = [
+  { label: "Download", href: "/download" },
+  { label: "Pricing", href: "#pricing" },
+  { label: "About", href: "#story" },
+  { label: "Terms", href: "/terms" },
+  { label: "Privacy", href: "/privacy" },
+  { label: "GitHub", href: "https://github.com/python-222/marrow-library", external: true },
+];
+
 export default function Footer() {
   return (
-    <footer
-      className="border-t py-12"
-      style={{ background: "#03030d", borderColor: "#18181b" }}
-    >
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-          {/* Left: logo + copyright */}
-          <div className="flex flex-col gap-2">
-            <span className="text-white font-bold text-lg">Marrow Library</span>
-            <span className="text-xs" style={{ color: "#52525b" }}>
-              © 2025 Marrow Library. All rights reserved.
-            </span>
+    <footer className="border-t" style={{ background: "var(--bg)", borderColor: "var(--border)" }}>
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+
+          {/* Logo + tagline */}
+          <div className="flex flex-col items-center md:items-start gap-1.5">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-black"
+                style={{ background: "linear-gradient(135deg, #5b52f0, #7c74f5)" }}>
+                M
+              </div>
+              <span className="text-white font-bold">Marrow Library</span>
+            </div>
+            <span className="text-xs italic" style={{ color: "var(--text-3)" }}>Built for collectors who care.</span>
           </div>
 
-          {/* Center: tagline */}
-          <div className="text-center">
-            <p className="text-sm font-medium italic" style={{ color: "#71717a" }}>
-              Built for collectors who care.
-            </p>
-          </div>
+          {/* Links */}
+          <nav className="flex items-center gap-5 flex-wrap justify-center">
+            {links.map(({ label, href, external }) => (
+              external ? (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                  className="text-sm transition-colors hover:text-white" style={{ color: "var(--text-2)" }}>
+                  {label}
+                </a>
+              ) : (
+                <Link key={label} href={href}
+                  className="text-sm transition-colors hover:text-white" style={{ color: "var(--text-2)" }}>
+                  {label}
+                </Link>
+              )
+            ))}
+          </nav>
 
-          {/* Right: links */}
-          <div className="flex items-center justify-end gap-6 flex-wrap">
-            <Link href="/download" className="text-sm transition-colors hover:text-white" style={{ color: "#71717a" }}>
-              Download
-            </Link>
-            <a href="#pricing" className="text-sm transition-colors hover:text-white" style={{ color: "#71717a" }}>
-              Pricing
-            </a>
-            <Link href="/terms" className="text-sm transition-colors hover:text-white" style={{ color: "#71717a" }}>
-              Terms
-            </Link>
-            <Link href="/privacy" className="text-sm transition-colors hover:text-white" style={{ color: "#71717a" }}>
-              Privacy
-            </Link>
-            <a href="https://github.com/python-222/marrow-library" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors hover:text-white" style={{ color: "#71717a" }}>
-              GitHub
-            </a>
-          </div>
+          {/* Copyright */}
+          <span className="text-xs" style={{ color: "var(--text-3)" }}>
+            © 2025 Marrow Library
+          </span>
         </div>
       </div>
     </footer>

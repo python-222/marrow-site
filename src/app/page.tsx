@@ -4,6 +4,7 @@ import Story from "@/components/Story";
 import Features from "@/components/Features";
 import Reviews from "@/components/Reviews";
 import Pricing from "@/components/Pricing";
+import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
 const SITE_URL = "https://marrow-library-marketing-site.vercel.app";
@@ -118,6 +119,7 @@ export default function Home() {
         <section id="pricing">
           <Pricing />
         </section>
+        <CTA />
         <Footer />
       </main>
     </>
