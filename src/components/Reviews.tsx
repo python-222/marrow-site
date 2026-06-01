@@ -54,7 +54,7 @@ const faqs = [
   { q: "Is my data stored in the cloud?", a: "Never. Marrow is local-first — everything lives on your device. No account required, no subscription for your data, no servers we control." },
   { q: "How does the barcode scanner work?", a: "The Marrow Scanner app uses your phone camera to read any barcode or ISBN. Metadata syncs instantly to your desktop over local Wi-Fi — no internet needed." },
   { q: "How accurate are the valuations?", a: "Very. We pull live sold-listing data from eBay, not asking prices. You see what items actually sold for, filtered by condition and format." },
-  { q: "Do I need a subscription?", a: "No subscription for the Free tier. Collector and Curator plans are available annually or as a one-time lifetime purchase." },
+  { q: "Do I need a subscription?", a: "No. Marrow Library is $20 once — no subscription, no auto-renewal, no recurring charges. Pay once and it's yours for 3 months." },
   { q: "Which platforms are supported?", a: "Marrow Library runs on macOS and Windows. The Marrow Scanner companion app is available on Android and iOS." },
 ];
 

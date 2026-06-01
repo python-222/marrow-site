@@ -52,11 +52,11 @@ export default function Nav() {
             Pricing
           </a>
           <Link
-            href="/download"
+            href="/api/checkout?tier=COLLECTOR&billing=launch"
             className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all hover:scale-105"
             style={{ background: "linear-gradient(135deg, #5b52f0, #7c74f5)", boxShadow: "0 0 16px rgba(91,82,240,0.3)" }}
           >
-            Download Free
+            Get Marrow — $20
           </Link>
         </div>
 
@@ -87,10 +87,10 @@ export default function Nav() {
               </a>
             );
           })}
-          <Link href="/download" className="px-4 py-2.5 rounded-lg text-sm font-semibold text-white text-center mt-1"
+          <Link href="/api/checkout?tier=COLLECTOR&billing=launch" className="px-4 py-2.5 rounded-lg text-sm font-semibold text-white text-center mt-1"
             style={{ background: "linear-gradient(135deg, #5b52f0, #7c74f5)" }}
             onClick={() => setMenuOpen(false)}>
-            Download Free
+            Get Marrow — $20
           </Link>
         </div>
       )}
