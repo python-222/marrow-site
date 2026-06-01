@@ -3,7 +3,7 @@ import { stripe } from "@/lib/stripe";
 
 export const dynamic = "force-dynamic";
 
-type BillingCycle = "monthly" | "annual" | "lifetime";
+type BillingCycle = "monthly" | "annual" | "lifetime" | "launch";
 type CheckoutTier = "COLLECTOR" | "CURATOR" | "COLLECTOR_LIFETIME";
 
 interface PriceConfig {
@@ -15,6 +15,17 @@ interface PriceConfig {
 }
 
 function getPriceConfig(tier: CheckoutTier, billing: BillingCycle): PriceConfig | null {
+  // Launch deal: $20 one-time payment, unlocks 3-month Collector access
+  if (billing === "launch") {
+    return {
+      unitAmount: 2000,
+      currency: "usd",
+      recurring: null,
+      productName: "Marrow Library — Full Access (3 Months)",
+      mode: "payment",
+    };
+  }
+
   if (billing === "lifetime" || tier === "COLLECTOR_LIFETIME") {
     return {
       unitAmount: 7900,
@@ -74,7 +85,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const rawBilling = searchParams.get("billing") ?? "annual";
 
   const validTiers: CheckoutTier[] = ["COLLECTOR", "CURATOR", "COLLECTOR_LIFETIME"];
-  const validBilling: BillingCycle[] = ["monthly", "annual", "lifetime"];
+  const validBilling: BillingCycle[] = ["monthly", "annual", "lifetime", "launch"];
 
   if (!rawTier || !validTiers.includes(rawTier as CheckoutTier)) {
     return NextResponse.json(

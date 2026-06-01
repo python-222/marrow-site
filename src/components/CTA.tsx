@@ -29,23 +29,23 @@ export default function CTA() {
         </h2>
 
         <p className="text-lg" style={{ color: "var(--text-2)" }}>
-          Use the full app free for 3 months — no card needed. After that, it&apos;s just $20 once. Own it forever.
+          $20 once. 3 months of full access included. No subscription, no auto-renewal, no surprises.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-3">
-          <Link href="/download"
+          <Link href="/api/checkout?tier=COLLECTOR&billing=launch"
             className="px-8 py-4 rounded-xl text-base font-bold text-white transition-all hover:scale-105"
             style={{ background: "linear-gradient(135deg, #5b52f0, #7c74f5)", boxShadow: "0 0 40px rgba(91,82,240,0.4)" }}>
-            Start Free — 3 Months on Us →
+            Get 3 Months for $20 →
           </Link>
-          <a href="#pricing" className="px-8 py-4 rounded-xl text-base font-semibold border transition-all"
+          <Link href="/download" className="px-8 py-4 rounded-xl text-base font-semibold border transition-all"
             style={{ borderColor: "var(--border-2)", color: "var(--text-2)" }}>
-            See How It Works
-          </a>
+            Download Free First
+          </Link>
         </div>
 
         <p className="text-xs" style={{ color: "var(--text-3)" }}>
-          No card for trial · After 3 months: $20 once · No subscription · No auto-charge
+          $20 · one-time · 3 months · no subscription · no auto-charge
         </p>
       </div>
     </section>

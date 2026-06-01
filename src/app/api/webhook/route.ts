@@ -8,10 +8,12 @@ export const dynamic = "force-dynamic";
 
 function computeExpiresAt(billing: string): number | null {
   const now = Date.now();
+  const DAY_MS = 24 * 60 * 60 * 1000;
   if (billing === "lifetime") return null;
-  if (billing === "monthly") return now + 31 * 24 * 60 * 60 * 1000;
-  // annual
-  return now + 365 * 24 * 60 * 60 * 1000;
+  if (billing === "launch")   return now + 90  * DAY_MS; // 3-month one-time deal
+  if (billing === "monthly")  return now + 31  * DAY_MS;
+  // annual (default)
+  return now + 365 * DAY_MS;
 }
 
 function licenseEmailHtml(key: string, tier: LicenseTier, email: string, siteUrl: string): string {

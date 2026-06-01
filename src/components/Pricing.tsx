@@ -44,21 +44,21 @@ export default function Pricing() {
           <div className="rounded-2xl p-6 border flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left"
             style={{ background: "rgba(91,82,240,0.05)", borderColor: "rgba(91,82,240,0.2)" }}>
             <div className="flex-1">
-              <div className="text-3xl mb-1">🎁</div>
-              <div className="text-sm font-bold text-white mb-1">3 months free</div>
-              <div className="text-xs" style={{ color: "var(--text-2)" }}>Use the full app free for 3 months. No card needed.</div>
+              <div className="text-3xl mb-1">💳</div>
+              <div className="text-sm font-bold text-white mb-1">$20 · one time</div>
+              <div className="text-xs" style={{ color: "var(--text-2)" }}>Single payment. No subscription. Ever.</div>
             </div>
             <div className="hidden sm:block w-px h-12 self-center" style={{ background: "var(--border)" }} />
             <div className="flex-1">
-              <div className="text-3xl mb-1">💳</div>
-              <div className="text-sm font-bold text-white mb-1">Then $20 — once</div>
-              <div className="text-xs" style={{ color: "var(--text-2)" }}>One-time payment. Own it forever. No subscription.</div>
+              <div className="text-3xl mb-1">🎁</div>
+              <div className="text-sm font-bold text-white mb-1">3 months included</div>
+              <div className="text-xs" style={{ color: "var(--text-2)" }}>Full access for 3 months, included in your $20.</div>
             </div>
             <div className="hidden sm:block w-px h-12 self-center" style={{ background: "var(--border)" }} />
             <div className="flex-1">
               <div className="text-3xl mb-1">♾️</div>
-              <div className="text-sm font-bold text-white mb-1">Yours forever</div>
-              <div className="text-xs" style={{ color: "var(--text-2)" }}>Pay once and it's yours. Updates included.</div>
+              <div className="text-sm font-bold text-white mb-1">Yours to keep</div>
+              <div className="text-xs" style={{ color: "var(--text-2)" }}>Free tier continues after. No surprise charges.</div>
             </div>
           </div>
         </div>
@@ -113,32 +113,26 @@ export default function Pricing() {
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap">
               <span className="px-4 py-1.5 rounded-full text-xs font-bold"
                 style={{ background: "linear-gradient(135deg, #f59e0b, #fbbf24)", color: "#1a0800" }}>
-                🔥 3 Months Free · Then $20 Once
+                🔥 Best Value
               </span>
             </div>
 
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#a5b4fc" }}>Full Access</p>
-              <div className="flex items-end gap-3 mb-1">
-                <div className="flex flex-col">
-                  <span className="text-xs line-through" style={{ color: "var(--text-3)" }}>Normally paid</span>
-                  <span className="text-5xl font-black" style={{ color: "#4ade80" }}>Free</span>
-                </div>
-                <div className="pb-2 flex flex-col gap-0.5">
-                  <span className="text-xs font-bold" style={{ color: "#a5b4fc" }}>for 3 months</span>
-                  <span className="text-xs" style={{ color: "var(--text-3)" }}>then $20 one-time</span>
-                </div>
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#a5b4fc" }}>Full Access · 3 Months</p>
+              <div className="flex items-end gap-2 mb-1">
+                <span className="text-5xl font-black text-white">$20</span>
+                <span className="text-base pb-2 font-semibold" style={{ color: "var(--text-2)" }}>one-time</span>
               </div>
-              <p className="text-xs mt-1" style={{ color: "var(--text-3)" }}>No card needed for the free trial</p>
+              <p className="text-xs mt-1" style={{ color: "var(--text-3)" }}>Pay once · 3 months full access · no subscription ever</p>
             </div>
 
-            <Link href="/download"
+            <Link href="/api/checkout?tier=COLLECTOR&billing=launch"
               className="w-full py-3.5 rounded-xl text-base font-bold text-white text-center transition-all hover:scale-105 block"
               style={{
                 background: "linear-gradient(135deg, #5b52f0, #7c74f5)",
                 boxShadow: "0 0 30px rgba(91,82,240,0.4)",
               }}>
-              Start Free — 3 Months on Us →
+              Get 3 Months Free → Pay $20 After
             </Link>
 
             <div className="border-t" style={{ borderColor: "rgba(91,82,240,0.2)" }} />
@@ -154,7 +148,7 @@ export default function Pricing() {
             </ul>
 
             <p className="text-xs text-center pt-1" style={{ color: "var(--text-3)" }}>
-              After 3 months: $20 once · No subscription · No auto-charge
+              $20 once · 3 months full access · no subscription · no auto-charge
             </p>
           </div>
         </div>
