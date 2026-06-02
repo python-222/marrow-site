@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { resend } from "@/lib/resend";
+import { sendEmail } from "@/lib/mailer";
 import { generateLicenseKey, PAID_TIERS, type LicenseTier, type LicensePayload } from "@/lib/license";
 import type Stripe from "stripe";
 
@@ -137,16 +137,13 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://marrowlibrary.app";
 
     try {
-      const emailResult = await resend.emails.send({
-        from: "Marrow Library <onboarding@resend.dev>",
+      await sendEmail({
         to: email,
         subject: "Your Marrow Library License Key & Download Links",
         html: licenseEmailHtml(licenseKey, tier, email, siteUrl),
       });
-      console.log(`[webhook] Email sent to ${email} — Resend ID: ${JSON.stringify(emailResult)}`);
+      console.log(`[webhook] Email sent to ${email}`);
     } catch (emailErr) {
-      // Non-fatal: log full error so Vercel logs capture it, but don't fail the webhook
-      // (Stripe would retry on 5xx, causing duplicate emails)
       console.error(`[webhook] FAILED to send license email to ${email}:`, emailErr);
     }
   }
