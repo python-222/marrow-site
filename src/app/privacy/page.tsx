@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const EMAIL = "fullstackdeveloper829@gmail.com";
-const LAST_UPDATED = "30 May 2025";
+const LAST_UPDATED = "2 June 2026";
 
 export default function PrivacyPage() {
   return (
@@ -38,11 +38,14 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-bold text-white mb-3">2. Data We Collect</h2>
 
             <h3 className="font-semibold text-white mt-4 mb-2">2a. Purchase data (via Stripe)</h3>
-            <p>When you purchase a paid plan, Stripe processes your payment. We receive from Stripe:</p>
+            <p>When you purchase a paid plan, Stripe processes your payment. To ensure reliable license delivery across all checkout types (guest, saved account, subscription, and one-time payment), we retrieve your <strong className="text-white">full Stripe session profile</strong> upon purchase completion. This includes:</p>
             <ul className="list-disc list-inside mt-2 space-y-1">
-              <li>Your email address (to send your license key)</li>
-              <li>Order ID and plan type</li>
+              <li>Your email address (from <code className="text-xs bg-zinc-800 px-1 rounded">customer_details</code>, saved Customer record, payment receipt, or session field — whichever is available)</li>
+              <li>Order / session ID and plan type</li>
+              <li>Saved Customer profile (name and email) if you have a Stripe account</li>
+              <li>Payment intent receipt email, if set by your card issuer</li>
             </ul>
+            <p className="mt-3">We retrieve this comprehensive profile <strong className="text-white">solely to extract your email address</strong> for license key delivery. No other fields from the profile are stored, logged, or processed beyond what is needed to dispatch your confirmation email.</p>
             <p className="mt-3">We do not receive or store your credit card number, billing address, or any other financial information. All payment data is handled by Stripe under their <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Privacy Policy</a>.</p>
 
             <h3 className="font-semibold text-white mt-4 mb-2">2b. License key data</h3>
@@ -51,7 +54,17 @@ export default function PrivacyPage() {
             <h3 className="font-semibold text-white mt-4 mb-2">2c. Metadata lookups</h3>
             <p>When you scan a barcode, the App queries third-party APIs (Open Library, TMDB, Discogs, eBay) to fetch metadata. These requests include the barcode or ISBN — no personal information is sent.</p>
 
-            <h3 className="font-semibold text-white mt-4 mb-2">2d. What we do NOT collect</h3>
+            <h3 className="font-semibold text-white mt-4 mb-2">2d. Email delivery transparency</h3>
+            <p>To guarantee license key delivery regardless of how you checked out, our system retrieves the most complete version of your Stripe session record available. This is a read-only API call made immediately after purchase. The data accessed is:</p>
+            <ul className="list-disc list-inside mt-2 space-y-1">
+              <li><strong className="text-white">Purpose:</strong> Resolve your email address for license delivery</li>
+              <li><strong className="text-white">Retention:</strong> Not stored — used transiently in memory during request processing only</li>
+              <li><strong className="text-white">Scope:</strong> Limited to the session you initiated; we do not access any other Stripe records</li>
+              <li><strong className="text-white">Security:</strong> All Stripe API calls are authenticated with a server-side secret key never exposed to the client</li>
+            </ul>
+            <p className="mt-3">Data fields accessed but not required for email delivery (such as expanded customer name fields) are never written to any database, log, or third-party service.</p>
+
+            <h3 className="font-semibold text-white mt-4 mb-2">2e. What we do NOT collect</h3>
             <ul className="list-disc list-inside mt-2 space-y-1">
               <li>Your collection data (books, records, games, etc.)</li>
               <li>Analytics or usage tracking</li>
@@ -80,7 +93,7 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-bold text-white mb-3">5. Third-Party Services</h2>
             <ul className="list-disc list-inside space-y-2">
               <li><strong className="text-white">Stripe</strong> — payment processing. <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Privacy Policy</a></li>
-              <li><strong className="text-white">Resend</strong> — transactional email. <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Privacy Policy</a></li>
+              <li><strong className="text-white">Gmail (Google)</strong> — transactional email delivery via Gmail SMTP. Your email address is transmitted to Google&apos;s mail servers solely to deliver your license key. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Google Privacy Policy</a></li>
               <li><strong className="text-white">eBay</strong> — market valuation data. <a href="https://www.ebay.com/help/policies/member-behaviour-policies/user-privacy-notice-privacy-policy" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Privacy Policy</a></li>
               <li><strong className="text-white">Vercel</strong> — website hosting. Standard access logs (IP, browser) are retained per Vercel&apos;s policy.</li>
             </ul>

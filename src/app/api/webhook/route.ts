@@ -107,7 +107,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: "Server misconfiguration: license secret missing" }, { status: 500 });
     }
 
-    const session = event.data.object as Stripe.Checkout.Session;
+    // Retrieve the FULL session object with all sub-objects expanded so we
+    // have every possible source of the customer's email address.
+    // The webhook payload alone is a partial snapshot — guest checkouts,
+    // one-time payments, and subscriptions each populate different fields.
+    const rawSession = event.data.object as Stripe.Checkout.Session;
+    const session = await stripe.checkout.sessions.retrieve(rawSession.id, {
+      expand: ["customer", "payment_intent"],
+    });
 
     const rawTier = session.metadata?.["tier"] ?? "COLLECTOR";
     const billing = session.metadata?.["billing"] ?? "annual";
@@ -117,10 +124,25 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       ? (rawTier as LicenseTier)
       : "COLLECTOR";
 
+    // Extract email from the full profile — try every field in priority order:
+    // 1. customer_details.email  — always present when Stripe collects contact info
+    // 2. Expanded Customer object — present when buyer has a saved Stripe account
+    // 3. payment_intent receipt_email — set for card payments
+    // 4. customer_email           — legacy field, populated on older sessions
+    const customer = session.customer as Stripe.Customer | null;
+    const paymentIntent = session.payment_intent as Stripe.PaymentIntent | null;
+
     const email =
       session.customer_details?.email ??
+      customer?.email ??
+      paymentIntent?.receipt_email ??
       session.customer_email ??
-      "unknown@example.com";
+      null;
+
+    if (!email) {
+      console.error(`[webhook] Could not resolve email for session ${session.id} — skipping email dispatch`);
+      return NextResponse.json({ received: true });
+    }
 
     const issuedAt = Date.now();
     const expiresAt = computeExpiresAt(billing);
