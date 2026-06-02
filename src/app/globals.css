@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #02020a;
-  --surface: #080818;
-  --surface-2: #0d0d20;
-  --border: #1a1a30;
-  --border-2: #252540;
+  --bg: #03030f;
+  --surface: #060614;
+  --surface-2: #0a0a1e;
+  --border: rgba(255,255,255,0.06);
+  --border-2: rgba(255,255,255,0.10);
   --indigo: #5b52f0;
   --indigo-light: #7c74f5;
   --indigo-glow: rgba(91,82,240,0.3);
