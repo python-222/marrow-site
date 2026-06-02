@@ -13,8 +13,8 @@ export const dynamic = "force-dynamic";
 
 // ── Asset URLs ────────────────────────────────────────────────────────────────
 // Update RELEASE_VERSION when cutting a new release.
-const RELEASE_VERSION = "v1.0.0";
-const RELEASE_BASE = `https://github.com/python-222/marrow-library/releases/download/${RELEASE_VERSION}`;
+const RELEASE_VERSION = "v1.0.10";
+const RELEASE_BASE = `https://github.com/fullstackdeveloper829-creator/marrow-library/releases/download/${RELEASE_VERSION}`;
 
 const ASSET_URLS: Record<string, string> = {
   macos:   `${RELEASE_BASE}/MarrowLibrary-${RELEASE_VERSION}-macos-universal.dmg`,
