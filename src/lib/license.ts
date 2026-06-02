@@ -2,6 +2,19 @@ import { createHmac, timingSafeEqual } from "crypto";
 
 export type LicenseTier = "FREE" | "COLLECTOR" | "CURATOR";
 
+// ── Session token (email-based activation) ────────────────────────────────────
+export interface SessionPayload {
+  email: string;
+  purchasedAt: number; // unix ms
+  iat: number;
+}
+
+export function signSession(payload: SessionPayload, secret: string): string {
+  const encoded = toBase64Url(JSON.stringify(payload));
+  const hmac    = computeHmac(encoded, secret);
+  return `${encoded}.${hmac}`;
+}
+
 export interface LicensePayload {
   tier: LicenseTier;
   email: string;
