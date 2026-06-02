@@ -1,40 +1,131 @@
 import Link from "next/link";
 import { stripe } from "@/lib/stripe";
+import { sendEmail } from "@/lib/mailer";
+import { generateLicenseKey, PAID_TIERS, type LicenseTier, type LicensePayload } from "@/lib/license";
+import type Stripe from "stripe";
 
 interface SuccessPageProps {
   searchParams: { session_id?: string; key?: string };
 }
 
 const PLATFORMS = [
-  { key: "macos",   icon: "", label: "macOS",          badge: ".dmg" },
-  { key: "windows", icon: "🪟", label: "Windows",       badge: ".exe" },
-  { key: "android", icon: "🤖", label: "Android Scanner", badge: ".apk" },
-  { key: "ios",     icon: "🍎", label: "iOS Simulator",  badge: ".tar.gz" },
+  { key: "macos",   icon: "🍎", label: "macOS",           badge: ".dmg"    },
+  { key: "windows", icon: "🪟", label: "Windows",          badge: ".exe"    },
+  { key: "android", icon: "🤖", label: "Android Scanner",  badge: ".apk"    },
+  { key: "ios",     icon: "📱", label: "iOS Simulator",    badge: ".tar.gz" },
 ] as const;
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+function computeExpiresAt(billing: string): number | null {
+  const now = Date.now();
+  if (billing === "lifetime") return null;
+  if (billing === "launch")   return now + 90  * DAY_MS;
+  if (billing === "monthly")  return now + 31  * DAY_MS;
+  return now + 365 * DAY_MS;
+}
 
 export default async function SuccessPage({ searchParams }: SuccessPageProps) {
   const sessionId = searchParams.session_id;
 
-  // Try to retrieve tier from Stripe session for display purposes
-  let tierLabel = "Premium";
+  let tierLabel      = "Premium";
   let customerEmail: string | null = null;
+  let licenseKey: string | null = searchParams.key ?? null;
+
   if (sessionId) {
     try {
-      const session = await stripe.checkout.sessions.retrieve(sessionId);
-      const tier = session.metadata?.["tier"];
-      if (tier === "CURATOR") tierLabel = "Curator";
+      // Retrieve full session — expand customer + payment_intent for email resolution
+      const session = await stripe.checkout.sessions.retrieve(sessionId, {
+        expand: ["customer", "payment_intent"],
+      });
+
+      const customer      = session.customer      as Stripe.Customer      | null;
+      const paymentIntent = session.payment_intent as Stripe.PaymentIntent | null;
+
+      const tier    = session.metadata?.["tier"]    ?? "COLLECTOR";
+      const billing = session.metadata?.["billing"] ?? "launch";
+
+      if (tier === "CURATOR")   tierLabel = "Curator";
       else if (tier === "COLLECTOR") tierLabel = "Collector";
+
+      // Resolve email from every available source
       customerEmail =
-        session.customer_details?.email ?? session.customer_email ?? null;
-    } catch {
-      // Non-critical — session retrieval failure doesn't break the page
+        session.customer_details?.email ??
+        customer?.email ??
+        paymentIntent?.receipt_email ??
+        session.customer_email ??
+        null;
+
+      // Generate license key and send email if payment is confirmed
+      if (customerEmail && session.payment_status === "paid") {
+        const licenseSecret = process.env.MARROW_LICENSE_SECRET;
+        if (licenseSecret) {
+          const resolvedTier: LicenseTier = PAID_TIERS.includes(tier as LicenseTier)
+            ? (tier as LicenseTier)
+            : "COLLECTOR";
+
+          const payload: LicensePayload = {
+            tier:      resolvedTier,
+            email:     customerEmail,
+            orderId:   session.id,
+            issuedAt:  Date.now(),
+            expiresAt: computeExpiresAt(billing),
+          };
+
+          licenseKey = generateLicenseKey(payload, licenseSecret);
+          const siteUrl    = process.env.NEXT_PUBLIC_SITE_URL ?? "https://marrow-site.vercel.app";
+          const encodedKey = encodeURIComponent(licenseKey);
+          const dlBase     = `${siteUrl}/api/download/premium?key=${encodedKey}&platform=`;
+
+          const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"/>
+<style>body{margin:0;padding:0;background:#050510;font-family:-apple-system,sans-serif;color:#f4f4f5}
+.w{max-width:560px;margin:40px auto;padding:0 20px}
+.card{background:#0f0f1a;border:1px solid #27272a;border-radius:12px;padding:40px}
+.logo{font-size:20px;font-weight:800;color:#fff;margin-bottom:32px}
+h1{font-size:24px;font-weight:700;margin:0 0 8px;color:#fff}
+p{font-size:15px;line-height:1.6;color:#a1a1aa;margin:0 0 16px}
+.key{background:#18181b;border:1px solid #3f3f46;border-radius:8px;padding:16px 20px;font-family:monospace;font-size:12px;color:#e4e4e7;word-break:break-all;margin:24px 0}
+.label{font-size:11px;font-weight:700;color:#52525b;text-transform:uppercase;letter-spacing:.1em;margin:28px 0 12px}
+.btn{display:block;background:rgba(79,70,229,.15);border:1px solid rgba(99,102,241,.35);border-radius:10px;padding:14px 18px;text-decoration:none;color:#d4d4d8;font-size:14px;font-weight:600;margin-bottom:8px}
+.footer{margin-top:32px;font-size:13px;color:#52525b;text-align:center}
+</style></head><body>
+<div class="w"><div class="card">
+<div class="logo">Marrow Library</div>
+<h1>You're all set!</h1>
+<p>Thanks for your purchase, ${customerEmail}. Your license key and download links are below.</p>
+<div class="label">Your License Key</div>
+<div class="key">${licenseKey}</div>
+<div class="label">Download</div>
+<a class="btn" href="${dlBase}macos">🍎 Download for macOS (.dmg)</a>
+<a class="btn" href="${dlBase}windows">🪟 Download for Windows (.exe)</a>
+<a class="btn" href="${dlBase}android">🤖 Download Android Scanner (.apk)</a>
+<div style="margin-top:24px;background:#0a0a14;border:1px solid #27272a;border-radius:8px;padding:20px">
+<p style="font-size:11px;font-weight:700;color:#52525b;text-transform:uppercase;letter-spacing:.1em;margin:0 0 12px">Activate</p>
+<ol style="margin:0;padding-left:20px;color:#a1a1aa;font-size:14px;line-height:1.8">
+<li>Open Marrow Library → Settings → License</li>
+<li>Paste your key → click Activate</li>
+</ol>
+</div>
+</div>
+<div class="footer">Marrow Library · Questions? Reply to this email.<br/>© 2026 Marrow Library.</div>
+</div></body></html>`;
+
+          // Fire email — awaited so it completes before page renders
+          try {
+            await sendEmail({
+              to:      customerEmail,
+              subject: "Your Marrow Library License Key & Download Links",
+              html,
+            });
+            console.log(`[success] License email sent to ${customerEmail}`);
+          } catch (emailErr) {
+            console.error(`[success] Email failed:`, emailErr);
+          }
+        }
+      }
+    } catch (err) {
+      console.error("[success] Session retrieval failed:", err);
     }
   }
-
-  // The license key may be pre-populated via query string (set by webhook email link)
-  // or the user can copy it from their email. Either way, the /api/download/premium
-  // route validates it before serving any download URL.
-  const licenseKey = searchParams.key ?? null;
 
   return (
     <main
