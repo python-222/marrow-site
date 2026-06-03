@@ -7,7 +7,23 @@ import Pricing from "@/components/Pricing";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
+export const revalidate = 3600;
+
 const SITE_URL = "https://marrow-site.vercel.app";
+
+async function getLatestVersion(): Promise<string> {
+  try {
+    const res = await fetch(
+      "https://api.github.com/repos/fullstackdeveloper829-creator/marrow-library/releases/latest",
+      { headers: { "User-Agent": "MarrowSite/1.0" }, next: { revalidate: 3600 } }
+    );
+    if (!res.ok) return "v1.0.12";
+    const data = await res.json() as { tag_name: string };
+    return data.tag_name ?? "v1.0.12";
+  } catch {
+    return "v1.0.12";
+  }
+}
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -101,7 +117,8 @@ const jsonLd = {
   ],
 };
 
-export default function Home() {
+export default async function Home() {
+  const version = await getLatestVersion();
   return (
     <>
       <script
@@ -110,7 +127,7 @@ export default function Home() {
       />
       <main>
         <Nav />
-        <Hero />
+        <Hero version={version} />
         <Story />
         <Features />
         <Reviews />

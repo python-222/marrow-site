@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const mediaTypes = ["Books","Vinyl","Games","Movies","Board Games","Cards","Comics","Spirits","Coins","Stamps","Plants","Clothing","Housewares"];
 
-export default function Hero() {
+export default function Hero({ version = "v1.0.12" }: { version?: string }) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ background: "#03030f" }}>
@@ -26,11 +26,19 @@ export default function Hero() {
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center gap-10 pt-12 pb-24">
 
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border"
-          style={{ background: "rgba(245,158,11,0.07)", borderColor: "rgba(245,158,11,0.18)", color: "#f59e0b" }}>
-          <span className="w-1.5 h-1.5 rounded-full inline-block animate-pulse" style={{ background: "#f59e0b" }} />
-          Launch Price · $20 once · No subscription
+        {/* Badges row */}
+        <div className="flex items-center gap-3 flex-wrap justify-center">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border"
+            style={{ background: "rgba(245,158,11,0.07)", borderColor: "rgba(245,158,11,0.18)", color: "#f59e0b" }}>
+            <span className="w-1.5 h-1.5 rounded-full inline-block animate-pulse" style={{ background: "#f59e0b" }} />
+            Launch Price · $20 once · No subscription
+          </div>
+          <a href="/download"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono border transition-colors hover:border-indigo-500/40"
+            style={{ background: "rgba(91,82,240,0.07)", borderColor: "rgba(91,82,240,0.2)", color: "#a5b4fc" }}>
+            <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: "#10b981" }} />
+            {version}
+          </a>
         </div>
 
         {/* Headline */}
