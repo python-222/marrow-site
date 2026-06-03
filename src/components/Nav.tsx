@@ -89,7 +89,7 @@ export default function Nav() {
       {menuOpen && (
         <div className="md:hidden border-t px-6 py-5 flex flex-col gap-4"
           style={{ background: "rgba(3,3,15,0.98)", borderColor: "rgba(255,255,255,0.06)" }}>
-          {[["#story","About"],["#features","Features"],["#pricing","Pricing"],["#/download","Download"]].map(([href, label]) => (
+          {[["#story","About"],["#features","Features"],["#pricing","Pricing"],["/download","Download"]].map(([href, label]) => (
             <a key={label} href={href} className="text-sm font-medium" style={{ color: "#9090b0" }}
               onClick={() => setMenuOpen(false)}>{label}</a>
           ))}
