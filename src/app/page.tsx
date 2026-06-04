@@ -17,11 +17,11 @@ async function getLatestVersion(): Promise<string> {
       "https://api.github.com/repos/fullstackdeveloper829-creator/marrow-library/releases/latest",
       { headers: { "User-Agent": "MarrowSite/1.0" }, next: { revalidate: 3600 } }
     );
-    if (!res.ok) return "v1.0.12";
+    if (!res.ok) return "v1.1.0";
     const data = await res.json() as { tag_name: string };
-    return data.tag_name ?? "v1.0.12";
+    return data.tag_name ?? "v1.1.0";
   } catch {
-    return "v1.0.12";
+    return "v1.1.0";
   }
 }
 

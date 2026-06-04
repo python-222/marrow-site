@@ -1,78 +1,108 @@
 /**
  * GET /api/download/premium?key=<license_key>&platform=macos|windows|android
  *
- * Validates the license key and redirects to the platform-specific download URL.
+ * Validates the license key and redirects to the platform-specific download URL
+ * for the LATEST GitHub release — no manual version bumps needed.
  * Returns 403 if the key is missing, invalid, or FREE tier.
- * This is the only place the premium download URLs are resolved — they are never
- * exposed in client-side code.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { validateLicenseKey, PAID_TIERS, type LicenseTier } from "@/lib/license";
 
 export const dynamic = "force-dynamic";
 
-// ── Asset URLs ────────────────────────────────────────────────────────────────
-// Update RELEASE_VERSION when cutting a new release.
-const RELEASE_VERSION = "v1.0.10";
-const RELEASE_BASE = `https://github.com/fullstackdeveloper829-creator/marrow-library/releases/download/${RELEASE_VERSION}`;
+const REPO = "fullstackdeveloper829-creator/marrow-library";
+const VALID_PLATFORMS = ["macos", "windows", "android", "ios"] as const;
+type Platform = typeof VALID_PLATFORMS[number];
 
-const ASSET_URLS: Record<string, string> = {
-  macos:   `${RELEASE_BASE}/MarrowLibrary-${RELEASE_VERSION}-macos-universal.dmg`,
-  windows: `${RELEASE_BASE}/MarrowLibrary-${RELEASE_VERSION}-windows-setup.exe`,
-  android: `${RELEASE_BASE}/MarrowScanner-${RELEASE_VERSION}-android.apk`,
-  ios:     `${RELEASE_BASE}/MarrowScanner-${RELEASE_VERSION}-ios-simulator.tar.gz`,
-};
-
-const PLATFORM_LABELS: Record<string, string> = {
+const PLATFORM_LABELS: Record<Platform, string> = {
   macos:   "macOS",
   windows: "Windows",
   android: "Android",
   ios:     "iOS Simulator",
 };
 
+// Fetch the latest release tag and build per-platform asset URLs dynamically.
+// Cached for 15 minutes via Next.js fetch cache so each download doesn't hit GitHub.
+async function getLatestAssetUrls(): Promise<Record<Platform, string> | null> {
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${REPO}/releases/latest`,
+      {
+        headers: { "User-Agent": "MarrowSite/1.0" },
+        next: { revalidate: 900 }, // 15 min
+      }
+    );
+    if (!res.ok) return null;
+    const data = await res.json() as { tag_name?: string; assets?: Array<{ name: string; browser_download_url: string }> };
+    const tag = data.tag_name;
+    if (!tag) return null;
+
+    const base = `https://github.com/${REPO}/releases/download/${tag}`;
+
+    // Build URL from asset list if available, fallback to name convention
+    const findAsset = (pattern: RegExp) =>
+      data.assets?.find(a => pattern.test(a.name))?.browser_download_url;
+
+    return {
+      macos:   findAsset(/macos.*\.dmg$/i)   ?? `${base}/MarrowLibrary-${tag}-macos-universal.dmg`,
+      windows: findAsset(/windows.*\.exe$/i) ?? `${base}/MarrowLibrary-${tag}-windows-setup.exe`,
+      android: findAsset(/android.*\.apk$/i) ?? `${base}/MarrowScanner-${tag}-android.apk`,
+      ios:     findAsset(/ios.*\.tar\.gz$/i) ?? `${base}/MarrowScanner-${tag}-ios-simulator.tar.gz`,
+    };
+  } catch {
+    return null;
+  }
+}
+
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(req.url);
-  const key = searchParams.get("key");
-  const platform = searchParams.get("platform");
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001";
+  const key      = searchParams.get("key");
+  const platform = searchParams.get("platform") as Platform | null;
+  const siteUrl  = process.env.NEXT_PUBLIC_SITE_URL ?? "https://marrowlibrary.app";
 
   // ── Validate platform ────────────────────────────────────────────────────────
-  if (!platform || !(platform in ASSET_URLS)) {
+  if (!platform || !(VALID_PLATFORMS as readonly string[]).includes(platform)) {
     return NextResponse.json(
-      { error: `Invalid platform. Valid options: ${Object.keys(ASSET_URLS).join(", ")}` },
+      { error: `Invalid platform. Valid: ${VALID_PLATFORMS.join(", ")}` },
       { status: 400 }
     );
   }
 
   // ── Validate license key ─────────────────────────────────────────────────────
   if (!key) {
-    return NextResponse.redirect(`${siteUrl}/#pricing?error=key_required`);
+    return NextResponse.redirect(`${siteUrl}/download?error=key_required`);
   }
 
   const secret = process.env.MARROW_LICENSE_SECRET;
   if (!secret) {
-    console.error("[download/premium] MARROW_LICENSE_SECRET is not set");
+    console.error("[download/premium] MARROW_LICENSE_SECRET not set");
     return NextResponse.json({ error: "Server misconfiguration" }, { status: 500 });
   }
 
   const result = validateLicenseKey(key, secret);
 
   if (!result.valid) {
-    // Key is invalid or expired — send to pricing page
     return NextResponse.redirect(
-      `${siteUrl}/#pricing?error=${encodeURIComponent(result.error ?? "invalid_key")}`
+      `${siteUrl}/download?error=${encodeURIComponent(result.error ?? "invalid_key")}`
     );
   }
 
   const tier = result.payload!.tier as LicenseTier;
   if (!PAID_TIERS.includes(tier)) {
-    // FREE tier tried to use a premium download link
-    return NextResponse.redirect(`${siteUrl}/#pricing?error=upgrade_required`);
+    return NextResponse.redirect(`${siteUrl}/download?error=upgrade_required`);
   }
 
-  // ── Log and redirect ─────────────────────────────────────────────────────────
-  const email = result.payload!.email;
-  console.log(`[download/premium] ${email} (${tier}) downloading ${PLATFORM_LABELS[platform]}`);
+  // ── Resolve latest download URL ───────────────────────────────────────────────
+  const assetUrls = await getLatestAssetUrls();
 
-  return NextResponse.redirect(ASSET_URLS[platform]!);
+  if (!assetUrls) {
+    // GitHub API unavailable — fall back to /releases/latest page
+    console.error("[download/premium] Could not fetch latest release from GitHub");
+    return NextResponse.redirect(`https://github.com/${REPO}/releases/latest`);
+  }
+
+  const email = result.payload!.email;
+  console.log(`[download/premium] ${email} (${tier}) → ${PLATFORM_LABELS[platform]}`);
+
+  return NextResponse.redirect(assetUrls[platform]);
 }

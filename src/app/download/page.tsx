@@ -61,7 +61,7 @@ function findAsset(assets: ReleaseAsset[], pattern: RegExp): ReleaseAsset | unde
 
 export default async function DownloadPage() {
   const release = await getLatestRelease();
-  const version  = release?.tag_name ?? "v1.0.12";
+  const version  = release?.tag_name ?? "v1.1.0";
   const assets   = release?.assets   ?? [];
 
   const winAsset     = findAsset(assets, /windows.*\.exe$/i) || findAsset(assets, /\.exe$/i);
