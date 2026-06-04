@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const mediaTypes = ["Books","Vinyl","Games","Movies","Board Games","Cards","Comics","Spirits","Coins","Stamps","Plants","Clothing","Housewares"];
 
-export default function Hero({ version = "v1.1.0" }: { version?: string }) {
+export default function Hero({ version = "v1.2.1" }: { version?: string }) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ background: "#03030f" }}>

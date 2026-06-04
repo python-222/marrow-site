@@ -10,7 +10,14 @@ import { validateLicenseKey, PAID_TIERS, type LicenseTier } from "@/lib/license"
 
 export const dynamic = "force-dynamic";
 
-const REPO = "fullstackdeveloper829-creator/marrow-library";
+const REPO    = "fullstackdeveloper829-creator/marrow-library";
+const STABLE  = "v1.2.1";
+const STABLE_URLS: Record<string, string> = {
+  windows: `https://github.com/${REPO}/releases/download/${STABLE}/MarrowLibrary-${STABLE}-windows-setup.exe`,
+  macos:   `https://github.com/${REPO}/releases/download/${STABLE}/MarrowLibrary-${STABLE}-macos-universal.dmg`,
+  android: `https://github.com/${REPO}/releases/download/${STABLE}/MarrowScanner-${STABLE}-android.apk`,
+  ios:     `https://github.com/${REPO}/releases/download/${STABLE}/MarrowScanner-${STABLE}-ios-simulator.tar.gz`,
+};
 const VALID_PLATFORMS = ["macos", "windows", "android", "ios"] as const;
 type Platform = typeof VALID_PLATFORMS[number];
 
@@ -96,9 +103,11 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const assetUrls = await getLatestAssetUrls();
 
   if (!assetUrls) {
-    // GitHub API unavailable — fall back to /releases/latest page
-    console.error("[download/premium] Could not fetch latest release from GitHub");
-    return NextResponse.redirect(`https://github.com/${REPO}/releases/latest`);
+    // GitHub API unavailable (private repo) — fall back to known stable release
+    console.warn("[download/premium] GitHub API unavailable — serving stable fallback");
+    const fallback = STABLE_URLS[platform];
+    if (!fallback) return NextResponse.redirect(`https://github.com/${REPO}/releases/tag/${STABLE}`);
+    return NextResponse.redirect(fallback);
   }
 
   const email = result.payload!.email;

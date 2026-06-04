@@ -5,6 +5,17 @@ export const revalidate = 3600;
 
 const REPO = "fullstackdeveloper829-creator/marrow-library";
 
+// ── Known-good fallback: last confirmed stable release ────────────────────────
+// Update these whenever a new release is published to GitHub.
+// Used when the GitHub API is unavailable (e.g. private repo, rate limit).
+const STABLE_VERSION = "v1.2.1";
+const STABLE_BASE    = `https://github.com/${REPO}/releases/download/${STABLE_VERSION}`;
+const STABLE_ASSETS  = {
+  windows: { url: `${STABLE_BASE}/MarrowLibrary-${STABLE_VERSION}-windows-setup.exe`, size: 27_800_000 },
+  macos:   { url: `${STABLE_BASE}/MarrowLibrary-${STABLE_VERSION}-macos-universal.dmg`, size: 112_000_000 },
+  android: { url: `${STABLE_BASE}/MarrowScanner-${STABLE_VERSION}-android.apk`, size: 91_800_000 },
+};
+
 interface ReleaseAsset {
   name: string;
   browser_download_url: string;
@@ -61,7 +72,8 @@ function findAsset(assets: ReleaseAsset[], pattern: RegExp): ReleaseAsset | unde
 
 export default async function DownloadPage() {
   const release = await getLatestRelease();
-  const version  = release?.tag_name ?? "v1.1.0";
+  // If GitHub API unavailable (private repo / rate limit), fall back to known stable
+  const version  = release?.tag_name ?? STABLE_VERSION;
   const assets   = release?.assets   ?? [];
 
   const winAsset     = findAsset(assets, /windows.*\.exe$/i) || findAsset(assets, /\.exe$/i);
@@ -75,8 +87,7 @@ export default async function DownloadPage() {
       label: "Windows",
       sub: "Windows 10 / 11 · 64-bit",
       badge: ".exe",
-      asset: winAsset,
-      fallbackUrl: `https://github.com/${REPO}/releases/latest`,
+      asset: winAsset ?? { browser_download_url: STABLE_ASSETS.windows.url, name: `MarrowLibrary-${version}-windows-setup.exe`, size: STABLE_ASSETS.windows.size },
     },
     {
       key: "macos",
@@ -84,8 +95,7 @@ export default async function DownloadPage() {
       label: "macOS",
       sub: "macOS 11+ · Universal (M1 + Intel)",
       badge: ".dmg",
-      asset: macAsset,
-      fallbackUrl: `https://github.com/${REPO}/releases/latest`,
+      asset: macAsset ?? { browser_download_url: STABLE_ASSETS.macos.url, name: `MarrowLibrary-${version}-macos-universal.dmg`, size: STABLE_ASSETS.macos.size },
     },
     {
       key: "android",
@@ -93,8 +103,7 @@ export default async function DownloadPage() {
       label: "Android Scanner",
       sub: "Android 8.0+ · Companion scanner app",
       badge: ".apk",
-      asset: androidAsset,
-      fallbackUrl: `https://github.com/${REPO}/releases/latest`,
+      asset: androidAsset ?? { browser_download_url: STABLE_ASSETS.android.url, name: `MarrowScanner-${version}-android.apk`, size: STABLE_ASSETS.android.size },
     },
     {
       key: "ios",
@@ -102,8 +111,7 @@ export default async function DownloadPage() {
       label: "iOS Scanner",
       sub: "iPhone · Companion scanner app",
       badge: "TestFlight",
-      asset: undefined,
-      fallbackUrl: "https://testflight.apple.com",
+      asset: undefined as ReleaseAsset | undefined,
     },
   ];
 
@@ -195,13 +203,13 @@ export default async function DownloadPage() {
               </div>
               <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
                 {platforms.map(p => {
-                  const url = p.asset?.browser_download_url ?? p.fallbackUrl;
-                  const size = p.asset ? formatBytes(p.asset.size) : null;
+                  const url       = p.asset?.browser_download_url ?? `https://github.com/${REPO}/releases/tag/${version}`;
+                  const size      = p.asset ? formatBytes(p.asset.size) : null;
                   const available = !!p.asset || p.key === "ios";
                   return (
                     <a
                       key={p.key}
-                      href={url}
+                      href={p.key === "ios" ? "https://testflight.apple.com" : url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`flex items-center gap-3 px-5 py-3.5 transition-colors group ${
