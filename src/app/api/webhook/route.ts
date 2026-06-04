@@ -156,7 +156,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     };
 
     const licenseKey = generateLicenseKey(payload, licenseSecret);
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://marrowlibrary.app";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://marrow-site.vercel.app";
 
     try {
       await sendEmail({

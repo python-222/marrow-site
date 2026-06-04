@@ -113,7 +113,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     );
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://marrow-site.vercel.app";
 
   const session = await stripe.checkout.sessions.create({
     mode: priceConfig.mode,

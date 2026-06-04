@@ -58,7 +58,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(req.url);
   const key      = searchParams.get("key");
   const platform = searchParams.get("platform") as Platform | null;
-  const siteUrl  = process.env.NEXT_PUBLIC_SITE_URL ?? "https://marrowlibrary.app";
+  const siteUrl  = process.env.NEXT_PUBLIC_SITE_URL ?? "https://marrow-site.vercel.app";
 
   // ── Validate platform ────────────────────────────────────────────────────────
   if (!platform || !(VALID_PLATFORMS as readonly string[]).includes(platform)) {
