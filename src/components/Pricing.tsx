@@ -6,11 +6,17 @@ const features = [
   "Unlimited items",
   "All 13 media types",
   "Barcode scanning",
-  "Live eBay valuation",
+  "Live eBay market valuation",
+  "Price alerts (value change notifications)",
+  "Discogs full collection import",
+  "Insurance PDF report with cover art",
+  "Advanced search & filters",
+  "Bulk edit & barcode labels",
   "Backup & restore",
-  "Lending tracker",
-  "CSV import/export",
-  "Activity log",
+  "Lending tracker with reminders",
+  "Photo attachments",
+  "CSV / Excel import & export",
+  "Activity log & item timeline",
 ];
 
 function ProfileCheckout() {

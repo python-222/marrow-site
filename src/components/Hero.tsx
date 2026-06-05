@@ -2,9 +2,85 @@ import Link from "next/link";
 
 const mediaTypes = ["Books","Vinyl","Games","Movies","Board Games","Cards","Comics","Spirits","Coins","Stamps","Plants","Clothing","Housewares"];
 
-export default function Hero({ version = "v1.2.1" }: { version?: string }) {
+function AppMockup() {
+  const items = [
+    { title: "Dune", creator: "Frank Herbert", type: "BOOK",  value: "$18",  color: "#3b82f6", emoji: "📚", cond: "MINT" },
+    { title: "Kind of Blue", creator: "Miles Davis", type: "MUSIC", value: "$140", color: "#ec4899", emoji: "🎵", cond: "NM"   },
+    { title: "Breath of Wild", creator: "Nintendo",  type: "GAME",  value: "$62",  color: "#10b981", emoji: "🎮", cond: "VG+"  },
+    { title: "The Godfather",  creator: "Coppola",   type: "MOVIE", value: "$24",  color: "#8b5cf6", emoji: "🎬", cond: "MINT" },
+    { title: "Wingspan",       creator: "Stonemaier",type: "BOARD", value: "$55",  color: "#f59e0b", emoji: "🎲", cond: "NM"   },
+    { title: "Charizard Holo", creator: "Pokémon",   type: "CARD",  value: "$310", color: "#ef4444", emoji: "🃏", cond: "NM"   },
+  ];
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    <div className="relative w-full max-w-2xl mx-auto rounded-2xl overflow-hidden"
+      style={{
+        background: "#0a0a18", border: "1px solid #1e1e35",
+        boxShadow: "0 40px 80px rgba(0,0,0,.8), 0 0 50px rgba(91,82,240,.12)",
+        transform: "perspective(1200px) rotateX(3deg)",
+      }}>
+      {/* Title bar */}
+      <div className="flex items-center gap-2 px-4 py-2.5 border-b" style={{ borderColor: "#1e1e35", background: "#060610" }}>
+        <div className="flex gap-1.5">
+          {["#ff5f57","#febc2e","#28c840"].map(c => <div key={c} className="w-2.5 h-2.5 rounded-full" style={{ background: c }} />)}
+        </div>
+        <div className="flex-1 flex justify-center">
+          <div className="h-5 w-40 rounded flex items-center justify-center text-[10px] font-mono" style={{ background: "#1a1a2e", color: "#6366f1" }}>Marrow Library</div>
+        </div>
+        <div className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: "#1a1a2e", color: "#34d399" }}>$2,841</div>
+      </div>
+      {/* Body */}
+      <div className="flex" style={{ height: "260px" }}>
+        {/* Sidebar */}
+        <div className="w-36 flex-shrink-0 border-r py-2 flex flex-col gap-0.5" style={{ borderColor: "#1e1e35", background: "#060610" }}>
+          {[["▦","Collection",true,"847"],["⊕","Add Items",false,""],["📊","Analytics",false,""],["📤","Loans",false,"2"]].map(([icon,label,active,badge]) => (
+            <div key={String(label)} className="flex items-center justify-between px-2.5 py-1.5 mx-1.5 rounded-lg text-[9px]"
+              style={{ background: active ? "rgba(91,82,240,.15)" : "transparent", color: active ? "#a5b4fc" : "#4b5563" }}>
+              <span className="flex items-center gap-1.5"><span>{icon}</span><span className="font-medium">{label}</span></span>
+              {badge && <span className="text-[8px] px-1 py-0.5 rounded-full" style={{ background: label === "Loans" ? "rgba(245,158,11,.2)" : "rgba(91,82,240,.2)", color: label === "Loans" ? "#fbbf24" : "#818cf8" }}>{badge}</span>}
+            </div>
+          ))}
+          <div className="mt-2 mx-3 h-px" style={{ background: "#1e1e35" }} />
+          <div className="px-2.5 pt-2">
+            {[["Books",312,"#3b82f6"],["Vinyl",189,"#ec4899"],["Games",156,"#10b981"],["Movies",94,"#8b5cf6"]].map(([l,c,col]) => (
+              <div key={String(l)} className="flex items-center justify-between py-0.5 text-[8px]" style={{ color: "#6b7280" }}>
+                <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full" style={{ background: String(col) }} />{l}</span>
+                <span>{c}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* Grid */}
+        <div className="flex-1 flex flex-col min-w-0">
+          <div className="flex items-center gap-1.5 px-3 py-2 border-b flex-shrink-0" style={{ borderColor: "#1e1e35" }}>
+            <div className="flex-1 h-5 rounded px-2 flex items-center text-[8px]" style={{ background: "#111124", color: "#4b5563", border: "1px solid #1e1e35" }}>🔍 Search or ⌘K…</div>
+          </div>
+          <div className="flex-1 overflow-hidden p-2">
+            <div className="grid grid-cols-3 gap-1.5 h-full">
+              {items.map(item => (
+                <div key={item.title} className="rounded-lg flex flex-col overflow-hidden" style={{ background: "#0f0f1f", border: "1px solid #1e1e35" }}>
+                  <div className="h-0.5" style={{ background: item.color }} />
+                  <div className="flex-1 flex items-center justify-center text-lg" style={{ background: `${item.color}0d`, minHeight: "40px" }}>{item.emoji}</div>
+                  <div className="p-1.5">
+                    <div className="text-[8px] font-bold text-white truncate">{item.title}</div>
+                    <div className="flex items-center justify-between mt-1">
+                      <span className="text-[7px] px-1 py-0.5 rounded-full font-medium" style={{ background: `${item.color}20`, color: item.color }}>{item.cond}</span>
+                      <span className="text-[8px] font-mono font-bold" style={{ color: "#34d399" }}>{item.value}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="absolute bottom-0 left-0 right-0 h-10 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(10,10,24,1), transparent)" }} />
+    </div>
+  );
+}
+
+export default function Hero({ version = "v1.3" }: { version?: string }) {
+  return (
+    <section className="relative overflow-hidden"
       style={{ background: "#03030f" }}>
 
       {/* Grid */}
@@ -24,7 +100,7 @@ export default function Hero({ version = "v1.2.1" }: { version?: string }) {
         style={{ bottom: "10%", right: "-5%", width: "400px", height: "400px",
           background: "radial-gradient(ellipse at center, rgba(124,116,245,0.08) 0%, transparent 65%)" }} />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center gap-10 pt-12 pb-24">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center gap-10 pt-24 pb-12">
 
         {/* Badges row */}
         <div className="flex items-center gap-3 flex-wrap justify-center">
@@ -123,6 +199,13 @@ export default function Hero({ version = "v1.2.1" }: { version?: string }) {
           </div>
         </div>
 
+      </div>
+
+      </div>
+
+      {/* App mockup */}
+      <div className="relative z-10 max-w-5xl mx-auto px-6 pb-24">
+        <AppMockup />
       </div>
 
       <style>{`

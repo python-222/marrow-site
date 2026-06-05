@@ -73,6 +73,66 @@ const features = [
     accent: "#a78bfa",
     accentBg: "rgba(167,139,250,0.08)",
   },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-5 h-5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+      </svg>
+    ),
+    label: "Price Alerts",
+    tagline: "Know when value moves.",
+    body: "Get notified via system tray when any item's market value changes by more than your threshold. Set it to 10%, 20%, whatever matters to you.",
+    accent: "#10b981",
+    accentBg: "rgba(16,185,129,0.08)",
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-5 h-5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0l-3.75-3.75M17.25 21L21 17.25" />
+      </svg>
+    ),
+    label: "Advanced Search",
+    tagline: "Find anything, instantly.",
+    body: "Filter by price range, date added, condition, loan status, whether an item has a photo, and more. Save filter presets. ⌘K opens search anywhere.",
+    accent: "#f59e0b",
+    accentBg: "rgba(245,158,11,0.08)",
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-5 h-5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+      </svg>
+    ),
+    label: "Discogs Import",
+    tagline: "Your vinyl library in one click.",
+    body: "Enter your Discogs username and import your entire collection automatically — pressings, labels, catalog numbers, cover art, and genres, all via the API.",
+    accent: "#ec4899",
+    accentBg: "rgba(236,72,153,0.08)",
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-5 h-5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+      </svg>
+    ),
+    label: "Insurance Report",
+    tagline: "PDF-ready in seconds.",
+    body: "Generate a professional report with cover art, condition notes, per-item market values, ROI, and a portfolio summary. One click to print or save as PDF.",
+    accent: "#3b82f6",
+    accentBg: "rgba(59,130,246,0.08)",
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-5 h-5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+      </svg>
+    ),
+    label: "Bulk Edit & Labels",
+    tagline: "Manage at scale.",
+    body: "Select multiple items and batch-edit condition, tags, or loanability in one action. Print barcode labels for your storage boxes with a single click.",
+    accent: "#14b8a6",
+    accentBg: "rgba(20,184,166,0.08)",
+  },
 ];
 
 export default function Features() {
