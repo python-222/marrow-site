@@ -201,8 +201,6 @@ export default function Hero({ version = "v1.3" }: { version?: string }) {
 
       </div>
 
-      </div>
-
       {/* App mockup */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 pb-24">
         <AppMockup />
