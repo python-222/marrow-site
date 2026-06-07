@@ -1,23 +1,17 @@
 import nodemailer from "nodemailer";
 
-export async function sendEmail(opts: {
-  to: string;
-  subject: string;
-  html: string;
-}): Promise<void> {
-  const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true, // SSL — required for port 465
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASSWORD, // App Password, not account password
-    },
-  });
+export const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT ?? 587),
+  secure: process.env.SMTP_SECURE === "true",
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
 
-  const from = `Marrow Library <${process.env.GMAIL_USER}>`;
+export const FROM = process.env.SMTP_FROM ?? process.env.SMTP_USER ?? "noreply@marrowlibrary.app";
 
-  // CRITICAL: fully await before returning — Vercel terminates the function
-  // the moment a response is sent, so fire-and-forget will drop the email.
-  await transporter.sendMail({ from, ...opts });
+export async function sendEmail(opts: { to: string; subject: string; html: string; text?: string }) {
+  return transporter.sendMail({ from: `Marrow Library <${FROM}>`, ...opts });
 }

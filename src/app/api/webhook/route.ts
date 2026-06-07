@@ -1,172 +1,175 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { sendEmail } from "@/lib/mailer";
-import { generateLicenseKey, PAID_TIERS, type LicenseTier, type LicensePayload } from "@/lib/license";
+import { transporter, FROM } from "@/lib/mailer";
 import type Stripe from "stripe";
 
 export const dynamic = "force-dynamic";
 
-function computeExpiresAt(billing: string): number | null {
-  const now = Date.now();
-  const DAY_MS = 24 * 60 * 60 * 1000;
-  if (billing === "lifetime") return null;
-  if (billing === "launch")   return now + 90  * DAY_MS; // 3-month one-time deal
-  if (billing === "monthly")  return now + 31  * DAY_MS;
-  // annual (default)
-  return now + 365 * DAY_MS;
-}
+// ── Email HTML ────────────────────────────────────────────────────────────────
 
-function licenseEmailHtml(key: string, tier: LicenseTier, email: string, siteUrl: string): string {
-  const encodedKey = encodeURIComponent(key);
-  const dlBase = `${siteUrl}/api/download/premium?key=${encodedKey}&platform=`;
+function emailHtml(email: string, siteUrl: string): string {
+  const name = email.split("@")[0] ?? "there";
+  const dl = (platform: string) =>
+    `${siteUrl}/api/download/premium?email=${encodeURIComponent(email)}&platform=${platform}`;
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Marrow Library License Key &amp; Download</title>
-  <style>
-    body { margin: 0; padding: 0; background: #050510; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #f4f4f5; }
-    .wrapper { max-width: 560px; margin: 40px auto; padding: 0 20px; }
-    .card { background: #0f0f1a; border: 1px solid #27272a; border-radius: 12px; padding: 40px; }
-    .logo { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 32px; }
-    h1 { font-size: 24px; font-weight: 700; margin: 0 0 8px; color: #fff; }
-    .tier-badge { display: inline-block; background: #3730a3; color: #a5b4fc; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 99px; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 0.05em; }
-    p { font-size: 15px; line-height: 1.6; color: #a1a1aa; margin: 0 0 16px; }
-    .key-box { background: #18181b; border: 1px solid #3f3f46; border-radius: 8px; padding: 16px 20px; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #e4e4e7; word-break: break-all; margin: 24px 0; }
-    .section-title { font-size: 11px; font-weight: 700; color: #52525b; text-transform: uppercase; letter-spacing: 0.1em; margin: 28px 0 12px; }
-    .dl-btn { display: block; background: rgba(79,70,229,0.15); border: 1px solid rgba(99,102,241,0.35); border-radius: 10px; padding: 14px 18px; text-decoration: none; color: #d4d4d8; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
-    .dl-btn:hover { background: rgba(79,70,229,0.25); }
-    .instructions { background: #0a0a14; border: 1px solid #27272a; border-radius: 8px; padding: 20px; margin-top: 24px; }
-    .instructions h2 { font-size: 11px; font-weight: 700; color: #52525b; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.1em; }
-    .instructions ol { margin: 0; padding-left: 20px; color: #a1a1aa; font-size: 14px; line-height: 1.8; }
-    .footer { margin-top: 32px; font-size: 13px; color: #52525b; text-align: center; }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Welcome to Marrow Library Pro</title>
 </head>
-<body>
-  <div class="wrapper">
-    <div class="card">
-      <div class="logo">Marrow Library</div>
-      <h1>You're all set!</h1>
-      <div class="tier-badge">★ ${tier} Tier</div>
-      <p>Thanks for your purchase, ${email}. Your license key and personal download links are below.</p>
+<body style="margin:0;padding:0;background:#06061a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#e4e4e7;">
+<div style="display:none;max-height:0;overflow:hidden;">Your Marrow Library Pro purchase is confirmed — activate instantly with your email.&#8203;&zwj;&#65279;</div>
 
-      <div class="section-title">Your License Key</div>
-      <div class="key-box">${key}</div>
-      <p style="font-size:13px;">Keep this safe — you'll need it to activate on each device.</p>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#06061a;">
+<tr><td align="center" style="padding:40px 16px 60px;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
 
-      <div class="section-title">Download Your Premium Version</div>
-      <a class="dl-btn" href="${dlBase}macos"> Download for macOS (.dmg)</a>
-      <a class="dl-btn" href="${dlBase}windows">🪟 Download for Windows (.exe)</a>
-      <a class="dl-btn" href="${dlBase}android">🤖 Download Android Scanner (.apk)</a>
-      <a class="dl-btn" href="${dlBase}ios">🍎 Download iOS Simulator Build (.tar.gz)</a>
-      <p style="font-size:12px;margin-top:12px;">These links are personal to your account. Each one validates your license before serving the download.</p>
+  <!-- Logo -->
+  <tr><td style="padding-bottom:32px;">
+    <span style="background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3);border-radius:10px;padding:8px 14px;font-size:15px;font-weight:800;color:#fff;">&#9670; Marrow Library</span>
+  </td></tr>
 
-      <div class="instructions">
-        <h2>Activate inside the app</h2>
-        <ol>
-          <li>Download and open Marrow Library on your Mac or PC</li>
-          <li>Navigate to <strong style="color:#fff;">Settings → License</strong></li>
-          <li>Paste your license key and click <strong style="color:#fff;">Activate</strong></li>
-          <li>Your ${tier} features unlock immediately</li>
-        </ol>
-      </div>
-    </div>
-    <div class="footer">
-      Marrow Library · Questions? Reply to this email.<br />
-      © 2025 Marrow Library. All rights reserved.
-    </div>
-  </div>
+  <!-- Hero card -->
+  <tr><td style="background:#0d0d20;border:1px solid #1e1e35;border-radius:16px;padding:40px 36px 36px;">
+
+    <p style="margin:0 0 8px;font-size:11px;font-weight:700;color:#818cf8;text-transform:uppercase;letter-spacing:.1em;">&#9733; Pro License &mdash; $20 one-time</p>
+    <h1 style="margin:0 0 12px;font-size:28px;font-weight:800;color:#fff;line-height:1.2;">You&rsquo;re in, ${name}!</h1>
+    <p style="margin:0 0 32px;font-size:15px;color:#71717a;line-height:1.6;">
+      Thanks for purchasing Marrow Library Pro. Activation is instant &mdash; just enter
+      <strong style="color:#c7d2fe;">${email}</strong> inside the app.
+    </p>
+
+    <!-- Activation steps -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0a0a18;border:1px solid #2a2a45;border-radius:12px;padding:24px;margin-bottom:28px;">
+      <tr><td>
+        <p style="margin:0 0 16px;font-size:10px;font-weight:700;color:#52525b;text-transform:uppercase;letter-spacing:.12em;">How to activate</p>
+        ${[
+          ["1", "Open Marrow Library", "Launch the desktop app on your Mac or PC"],
+          ["2", "Click the license badge", "Top-right corner of the app header"],
+          ["3", "Enter your email", `Type <strong style="color:#c7d2fe;">${email}</strong> and click Activate Pro`],
+          ["4", "All features unlock instantly", "No key, no code, no waiting"],
+        ].map(([n, t, d]) => `
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:14px;">
+          <tr>
+            <td valign="top" style="width:28px;padding-right:12px;padding-top:2px;">
+              <div style="width:22px;height:22px;background:rgba(99,102,241,.2);border-radius:50%;text-align:center;line-height:22px;font-size:11px;font-weight:700;color:#818cf8;">${n}</div>
+            </td>
+            <td>
+              <p style="margin:0 0 2px;font-size:14px;font-weight:600;color:#e4e4e7;">${t}</p>
+              <p style="margin:0;font-size:13px;color:#52525b;line-height:1.5;">${d}</p>
+            </td>
+          </tr>
+        </table>`).join("")}
+      </td></tr>
+    </table>
+
+    <!-- Download buttons -->
+    <p style="margin:0 0 12px;font-size:10px;font-weight:700;color:#52525b;text-transform:uppercase;letter-spacing:.12em;">Download</p>
+    ${[
+      { platform: "macos",   icon: "🍏", label: "macOS",          ext: ".dmg" },
+      { platform: "windows", icon: "🪟", label: "Windows",         ext: ".exe" },
+      { platform: "android", icon: "🤖", label: "Android Scanner", ext: ".apk" },
+    ].map(p => `
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+      <tr>
+        <td style="background:rgba(79,70,229,.12);border:1px solid rgba(99,102,241,.3);border-radius:10px;padding:0;">
+          <a href="${dl(p.platform)}" style="display:block;padding:14px 18px;text-decoration:none;color:#d4d4d8;font-size:14px;font-weight:600;">
+            ${p.icon}&nbsp;&nbsp;Download for ${p.label} <span style="color:#52525b;font-weight:400;font-size:12px;">${p.ext}</span>
+          </a>
+        </td>
+      </tr>
+    </table>`).join("")}
+
+  </td></tr>
+
+  <!-- Footer -->
+  <tr><td style="padding-top:28px;text-align:center;">
+    <p style="margin:0 0 6px;font-size:13px;color:#3f3f55;">Questions? Reply to this email &mdash; we read everything.</p>
+    <p style="margin:0;font-size:12px;color:#27273a;">&copy; 2026 Marrow Library &nbsp;&middot;&nbsp;
+      <a href="${siteUrl}/privacy" style="color:#3f3f55;text-decoration:none;">Privacy</a>
+    </p>
+  </td></tr>
+
+</table>
+</td></tr>
+</table>
 </body>
 </html>`;
 }
+
+function emailText(email: string, siteUrl: string): string {
+  const dl = (p: string) => `${siteUrl}/api/download/premium?email=${encodeURIComponent(email)}&platform=${p}`;
+  return [
+    "Marrow Library Pro — Purchase Confirmed",
+    "",
+    "Thanks for your purchase! Activation takes 10 seconds:",
+    "",
+    "1. Open Marrow Library on your Mac or PC",
+    "2. Click the license badge (top-right header)",
+    `3. Enter this email: ${email}`,
+    "4. Click Activate Pro — done!",
+    "",
+    "Download links:",
+    `macOS:   ${dl("macos")}`,
+    `Windows: ${dl("windows")}`,
+    `Android: ${dl("android")}`,
+    "",
+    "Questions? Reply to this email.",
+    `© 2026 Marrow Library · ${siteUrl}`,
+  ].join("\n");
+}
+
+// ── Webhook handler ───────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   const body = await req.text();
   const sig = req.headers.get("stripe-signature");
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-  const licenseSecret = process.env.MARROW_LICENSE_SECRET;
 
   if (!sig || !webhookSecret) {
-    return NextResponse.json({ error: "Missing signature or webhook secret" }, { status: 400 });
+    return NextResponse.json({ error: "Missing Stripe signature or webhook secret" }, { status: 400 });
   }
 
   let event: Stripe.Event;
   try {
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Unknown error";
-    return NextResponse.json({ error: `Webhook verification failed: ${message}` }, { status: 400 });
+    const msg = err instanceof Error ? err.message : "Unknown error";
+    return NextResponse.json({ error: `Webhook verification failed: ${msg}` }, { status: 400 });
   }
 
   if (event.type === "checkout.session.completed") {
-    // Guard: refuse to generate keys if secret is absent (prevents accidental key forgery)
-    if (!licenseSecret) {
-      console.error("[webhook] MARROW_LICENSE_SECRET is not set — cannot issue license key");
-      return NextResponse.json({ error: "Server misconfiguration: license secret missing" }, { status: 500 });
+    const session = event.data.object as Stripe.Checkout.Session;
+
+    if (session.payment_status !== "paid") {
+      return NextResponse.json({ received: true, skipped: "not_paid" });
     }
-
-    // Retrieve the FULL session object with all sub-objects expanded so we
-    // have every possible source of the customer's email address.
-    // The webhook payload alone is a partial snapshot — guest checkouts,
-    // one-time payments, and subscriptions each populate different fields.
-    const rawSession = event.data.object as Stripe.Checkout.Session;
-    const session = await stripe.checkout.sessions.retrieve(rawSession.id, {
-      expand: ["customer", "payment_intent"],
-    });
-
-    const rawTier = session.metadata?.["tier"] ?? "COLLECTOR";
-    const billing = session.metadata?.["billing"] ?? "annual";
-
-    // Use the shared PAID_TIERS list — never issue a FREE tier from a checkout
-    const tier: LicenseTier = PAID_TIERS.includes(rawTier as LicenseTier)
-      ? (rawTier as LicenseTier)
-      : "COLLECTOR";
-
-    // Extract email from the full profile — try every field in priority order:
-    // 1. customer_details.email  — always present when Stripe collects contact info
-    // 2. Expanded Customer object — present when buyer has a saved Stripe account
-    // 3. payment_intent receipt_email — set for card payments
-    // 4. customer_email           — legacy field, populated on older sessions
-    const customer = session.customer as Stripe.Customer | null;
-    const paymentIntent = session.payment_intent as Stripe.PaymentIntent | null;
 
     const email =
       session.customer_details?.email ??
-      customer?.email ??
-      paymentIntent?.receipt_email ??
       session.customer_email ??
       null;
 
     if (!email) {
-      console.error(`[webhook] Could not resolve email for session ${session.id} — skipping email dispatch`);
-      return NextResponse.json({ received: true });
+      console.error("[webhook] No email found in session", session.id);
+      return NextResponse.json({ received: true, skipped: "no_email" });
     }
 
-    const issuedAt = Date.now();
-    const expiresAt = computeExpiresAt(billing);
-
-    const payload: LicensePayload = {
-      tier,
-      email,
-      orderId: session.id,
-      issuedAt,
-      expiresAt,
-    };
-
-    const licenseKey = generateLicenseKey(payload, licenseSecret);
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://marrow-site.vercel.app";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://marrowlibrary.app";
 
     try {
-      await sendEmail({
+      await transporter.sendMail({
+        from: `Marrow Library <${FROM}>`,
         to: email,
-        subject: "Your Marrow Library License Key & Download Links",
-        html: licenseEmailHtml(licenseKey, tier, email, siteUrl),
+        subject: "Welcome to Marrow Library Pro 🎉 — activate in 10 seconds",
+        html: emailHtml(email, siteUrl),
+        text: emailText(email, siteUrl),
       });
-      console.log(`[webhook] Email sent to ${email}`);
-    } catch (emailErr) {
-      console.error(`[webhook] FAILED to send license email to ${email}:`, emailErr);
+      console.log("[webhook] Purchase email sent to", email);
+    } catch (err) {
+      console.error("[webhook] SMTP error:", err);
     }
   }
 

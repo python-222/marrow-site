@@ -1,57 +1,100 @@
 import Link from "next/link";
 
-const links = [
-  { label: "Download", href: "/download" },
-  { label: "Pricing",  href: "#pricing" },
-  { label: "About",    href: "#story" },
-  { label: "Terms",    href: "/terms" },
-  { label: "Privacy",  href: "/privacy" },
-  { label: "GitHub",   href: "https://github.com/fullstackdeveloper829-creator/marrow-library", external: true },
+// Feature #20 — Marketing Site: Expanded footer with more navigation links
+
+const columns = [
+  {
+    heading: "Product",
+    links: [
+      { label: "Download", href: "/download" },
+      { label: "Pricing", href: "/#pricing" },
+      { label: "Changelog", href: "/changelog" },
+      { label: "Roadmap", href: "/roadmap" },
+      { label: "System requirements", href: "/system-requirements" },
+    ],
+  },
+  {
+    heading: "Collections",
+    links: [
+      { label: "Books", href: "/#collections" },
+      { label: "Vinyl & Music", href: "/#collections" },
+      { label: "Video Games", href: "/#collections" },
+      { label: "Board Games", href: "/#collections" },
+      { label: "All 13 types", href: "/#collections" },
+    ],
+  },
+  {
+    heading: "Company",
+    links: [
+      { label: "Contact", href: "/contact" },
+      { label: "Privacy policy", href: "/privacy" },
+      { label: "Terms of service", href: "/terms" },
+      { label: "Refund policy", href: "/refund" },
+      { label: "GitHub", href: "https://github.com/python-222/marrow-library" },
+    ],
+  },
 ];
 
 export default function Footer() {
   return (
-    <footer className="border-t" style={{ background: "#03030f", borderColor: "rgba(255,255,255,0.05)" }}>
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-
-          {/* Brand */}
-          <div className="flex flex-col items-center md:items-start gap-1.5">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-md flex items-center justify-center"
-                style={{ background: "linear-gradient(135deg, #5b52f0, #7c74f5)" }}>
-                <svg viewBox="0 0 16 16" fill="none" className="w-3.5 h-3.5">
-                  <rect x="1.5" y="1.5" width="3" height="13" rx="1" fill="white" opacity="0.95"/>
-                  <rect x="6"   y="3.5" width="3" height="11" rx="1" fill="white" opacity="0.72"/>
-                  <rect x="10.5" y="6" width="2.5" height="8.5" rx="0.8" fill="white" opacity="0.45"/>
-                </svg>
+    <footer style={{ background: "#03030d", borderTop: "1px solid #18181b" }}>
+      {/* Main columns */}
+      <div className="max-w-6xl mx-auto px-6 py-14">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+          {/* Brand column */}
+          <div className="col-span-2 md:col-span-1">
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+              <div style={{ width: 28, height: 28, background: "#4f46e5", borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: 12, color: "white" }}>
+                ◆
               </div>
-              <span className="text-white font-bold text-sm">Marrow Library</span>
+              <span className="text-white font-bold">Marrow Library</span>
             </div>
-            <span className="text-xs" style={{ color: "#252545" }}>Built for collectors who care.</span>
+            <p className="text-sm leading-relaxed" style={{ color: "#52525b" }}>
+              The collection cataloging app for serious collectors.
+            </p>
+            <p className="text-xs mt-3" style={{ color: "#3f3f55" }}>
+              © 2026 Marrow Library
+            </p>
           </div>
 
-          {/* Links */}
-          <nav className="flex items-center gap-5 flex-wrap justify-center">
-            {links.map(({ label, href, external }) => (
-              external ? (
-                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                  className="text-sm transition-colors hover:text-white" style={{ color: "#30305a" }}>
-                  {label}
-                </a>
-              ) : (
-                <Link key={label} href={href}
-                  className="text-sm transition-colors hover:text-white" style={{ color: "#30305a" }}>
-                  {label}
-                </Link>
-              )
-            ))}
-          </nav>
+          {/* Link columns */}
+          {columns.map((col) => (
+            <div key={col.heading}>
+              <div className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "#52525b" }}>
+                {col.heading}
+              </div>
+              <ul className="space-y-3">
+                {col.links.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-sm hover:text-white transition-colors"
+                      style={{ color: "#71717a", textDecoration: "none" }}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
 
-          {/* Copyright */}
-          <span className="text-xs" style={{ color: "#1e1e38" }}>
-            © 2026 Marrow Library
-          </span>
+      {/* Bottom bar */}
+      <div style={{ borderTop: "1px solid #18181b" }}>
+        <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p className="text-xs" style={{ color: "#3f3f55" }}>
+            Made with ♥ for collectors. Local-first. No tracking. No subscriptions.
+          </p>
+          <div className="flex items-center gap-4">
+            <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "rgba(16,185,129,.1)", color: "#34d399", border: "1px solid rgba(16,185,129,.2)", fontSize: 11 }}>
+              🔒 No tracking
+            </span>
+            <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "rgba(99,102,241,.1)", color: "#818cf8", border: "1px solid rgba(99,102,241,.2)", fontSize: 11 }}>
+              🗄️ Local-first
+            </span>
+          </div>
         </div>
       </div>
     </footer>
