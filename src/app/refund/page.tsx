@@ -2,8 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Refund Policy — Marrow Library",
-  description: "14-day no-questions-asked refund policy for Marrow Library Pro.",
+  title: "Refund Policy",
+  description: "Marrow Library offers a 14-day no-questions-asked full refund on Pro licenses. If you're not satisfied, email us for an instant refund.",
+  robots: { index: true, follow: true },
 };
 
 const EMAIL = "fullstackdeveloper829@gmail.com";

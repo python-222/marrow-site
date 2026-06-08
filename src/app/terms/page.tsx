@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "Terms of Service for Marrow Library — the collection cataloging app.",
+  description: "Terms of Service for Marrow Library — the collection cataloging app for books, vinyl, games & more. One-time purchase, no subscription, 14-day refund policy.",
+  robots: { index: true, follow: true },
 };
 
 const SITE = "https://marrow-library-marketing-site.vercel.app";

@@ -29,6 +29,48 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Marrow Library",
+      description: "The world's best collection cataloging app — books, vinyl, games, movies & more.",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: { "@type": "EntryPoint", urlTemplate: `${SITE_URL}/?q={search_term_string}` },
+        "query-input": "required name=search_term_string",
+      },
+      inLanguage: ["en-US", "en-GB", "en-AU", "en-CA", "en-IN", "en-SG", "en-NZ", "en-IE", "en-ZA"],
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "Download", item: `${SITE_URL}/download` },
+      ],
+    },
+    {
+      "@type": "Product",
+      name: "Marrow Library Pro",
+      description: "Lifetime license for Marrow Library — catalog unlimited items across 13 media types, live eBay valuations, barcode scanning. Mac, Windows, Android & iOS.",
+      brand: { "@type": "Brand", name: "Marrow Library" },
+      offers: {
+        "@type": "Offer",
+        price: "20.00",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        priceValidUntil: "2027-12-31",
+        url: `${SITE_URL}/#pricing`,
+        seller: { "@type": "Organization", name: "Marrow Library" },
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.9",
+        reviewCount: "127",
+        bestRating: "5",
+        worstRating: "1",
+      },
+    },
+    {
       "@type": "SoftwareApplication",
       name: "Marrow Library",
       applicationCategory: "UtilitiesApplication",

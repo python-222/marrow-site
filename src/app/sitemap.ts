@@ -1,12 +1,14 @@
 import type { MetadataRoute } from "next";
 
-const SITE_URL = "https://marrow-library-marketing-site.vercel.app";
+const SITE_URL = "https://marrow-site.vercel.app";
+const NOW = new Date("2026-06-08");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
-    { url: SITE_URL,               lastModified: new Date(), changeFrequency: "weekly",  priority: 1.0 },
-    { url: `${SITE_URL}/download`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${SITE_URL}/terms`,    lastModified: new Date(), changeFrequency: "yearly",  priority: 0.4 },
-    { url: `${SITE_URL}/privacy`,  lastModified: new Date(), changeFrequency: "yearly",  priority: 0.4 },
+    { url: SITE_URL,                  lastModified: NOW, changeFrequency: "weekly",  priority: 1.0 },
+    { url: `${SITE_URL}/download`,    lastModified: NOW, changeFrequency: "weekly",  priority: 0.9 },
+    { url: `${SITE_URL}/terms`,       lastModified: NOW, changeFrequency: "yearly",  priority: 0.5 },
+    { url: `${SITE_URL}/privacy`,     lastModified: NOW, changeFrequency: "yearly",  priority: 0.5 },
+    { url: `${SITE_URL}/refund`,      lastModified: NOW, changeFrequency: "yearly",  priority: 0.5 },
   ];
 }
