@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
 const config = {
   async rewrites() {
-    return [
-      { source: '/', destination: '/index.html' },
-    ];
+    return {
+      beforeFiles: [
+        { source: '/', destination: '/index.html' },
+      ],
+    };
   },
 };
 module.exports = config;
