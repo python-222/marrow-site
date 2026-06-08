@@ -85,7 +85,7 @@ const jsonLd = {
           name: "What types of collections can Marrow Library catalog?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Marrow Library supports books, vinyl records, video games, movies/DVDs, board games, trading cards, comic books, alcohol/spirits, housewares, clothing, coins, stamps, and plants — 13 media types in total.",
+            text: "Marrow Library supports books, vinyl records, CDs, video games, movies/DVDs/Blu-rays, board games, trading cards, comic books, alcohol/spirits, housewares, clothing, coins, stamps, and plants — 13 media types in one app.",
           },
         },
         {
@@ -93,7 +93,7 @@ const jsonLd = {
           name: "Does Marrow Library store my data in the cloud?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "No. Marrow Library is local-first — your data lives entirely on your device. There is no cloud sync and no account required. Your collection is yours.",
+            text: "No. Marrow Library is local-first — your data lives entirely on your device. There is no cloud sync, no account required, and no internet connection needed to use the app. Your collection is yours.",
           },
         },
         {
@@ -101,7 +101,7 @@ const jsonLd = {
           name: "How does the barcode scanner work?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "The Marrow Scanner companion app uses your phone's camera to read any barcode or ISBN. It instantly pulls metadata — title, creator, cover art, format, release year — and syncs it to the desktop app over your local Wi-Fi network.",
+            text: "The Marrow Scanner companion app uses your phone's camera to read any barcode, ISBN, or UPC. It instantly pulls metadata — title, creator, cover art, format, release year — and syncs it to the desktop app over your local Wi-Fi network. No internet required after the initial metadata fetch.",
           },
         },
         {
@@ -109,7 +109,39 @@ const jsonLd = {
           name: "How are item valuations calculated?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Marrow Library pulls live sold-listing data from eBay's API and calculates a realistic market value based on recent sales for items matching your condition, format, and edition.",
+            text: "Marrow Library pulls live sold-listing data from eBay's API and calculates a realistic market value based on recent sales for items matching your condition, format, and edition. This is ideal for insurance, resale, or simply knowing what your collection is worth.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is Marrow Library available in the UK?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. Marrow Library is available worldwide including the UK. Download it for Mac, Windows, or Android. It works completely offline and supports all currencies for collection valuation.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is there a subscription fee?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. Marrow Library is a one-time purchase of $20 USD with no recurring fees, no subscription, and no price hikes. You pay once and own it forever on every device you own. A free tier (up to 50 items) is available with no time limit.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How is Marrow Library different from CLZ or Libib?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Unlike CLZ (which charges per media type per year) or Libib (which requires a monthly subscription and cloud storage), Marrow Library covers all 13 media types in a single one-time $20 purchase. Your data is stored locally — no account, no cloud, no recurring fees.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can I use Marrow Library to track finds from car boot sales, thrift stores, or charity shops?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Absolutely. Just scan the barcode with your phone and Marrow Library instantly adds the item with full metadata and a live eBay market value — perfect for tracking what you paid versus what it's worth.",
           },
         },
       ],

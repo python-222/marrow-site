@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Privacy Policy for Marrow Library — your data stays on your device.",
+  description: "Marrow Library privacy policy — local-first, no cloud storage, no tracking. Your collection data never leaves your device.",
 };
 
 const EMAIL = "fullstackdeveloper829@gmail.com";
