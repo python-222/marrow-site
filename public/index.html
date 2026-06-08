@@ -1126,6 +1126,13 @@ const ro = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
 }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
 document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+// Immediately reveal elements already in the viewport (guards against IO timing race)
+requestAnimationFrame(() => requestAnimationFrame(() => {
+  document.querySelectorAll('.reveal').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('in');
+  });
+}));
 
 // ── COUNTER ANIMATION ─────────────────────────────────────────────────────────
 function animCount(el, to, pre='', suf=''){
