@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" fill="none">
+  <defs>
+    <linearGradient id="bgG" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#3730d4"/>
+      <stop offset="50%"  stop-color="#5b52f0"/>
+      <stop offset="100%" stop-color="#7c74f5"/>
+    </linearGradient>
+    <linearGradient id="shineG" x1="0" y1="0" x2="0" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="white" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="textG" x1="140" y1="0" x2="480" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#c7d2fe"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- ── ICON MARK ── -->
+  <rect width="120" height="120" rx="28" fill="url(#bgG)"/>
+  <rect width="120" height="120" rx="28" fill="url(#shineG)"/>
+  <rect width="120" height="120" rx="28" fill="none" stroke="white" stroke-opacity="0.10" stroke-width="1"/>
+
+  <!-- Spines (M-silhouette) -->
+  <rect x="16" y="24" width="14" height="68" rx="3.5" fill="white" opacity="0.95"/>
+  <rect x="34" y="36" width="11" height="56" rx="2.5" fill="white" opacity="0.75"/>
+  <rect x="49" y="48" width="9"  height="44" rx="2"   fill="white" opacity="0.55"/>
+  <rect x="62" y="38" width="11" height="54" rx="2.5" fill="white" opacity="0.70"/>
+  <rect x="77" y="26" width="14" height="66" rx="3.5" fill="white" opacity="0.90"/>
+  <rect x="95" y="42" width="8"  height="50" rx="2"   fill="white" opacity="0.38"/>
+  <rect x="14" y="96" width="92" height="3.5" rx="1.75" fill="white" opacity="0.20"/>
+
+  <!-- ── WORDMARK ── -->
+  <!-- "MARROW" in Inter/system-ui, bold, tracked -->
+  <text
+    x="148" y="79"
+    font-family="'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif"
+    font-weight="800"
+    font-size="52"
+    letter-spacing="-1.5"
+    fill="url(#textG)"
+  >Marrow</text>
+
+  <!-- Sub-label -->
+  <text
+    x="150" y="100"
+    font-family="'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif"
+    font-weight="500"
+    font-size="16"
+    letter-spacing="3.5"
+    fill="white"
+    opacity="0.32"
+    text-transform="uppercase"
+  >LIBRARY</text>
+</svg>
