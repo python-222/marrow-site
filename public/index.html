@@ -800,8 +800,9 @@
       </a>
       <div class="nav-links">
         <a href="#story"    class="nav-a" data-sec="story">About</a>
-        <a href="#features" class="nav-a" data-sec="features">Features</a>
-        <a href="#reviews"  class="nav-a" data-sec="reviews">Reviews</a>
+        <a href="#features"    class="nav-a" data-sec="features">Features</a>
+        <a href="#collections" class="nav-a" data-sec="collections">Collections</a>
+        <a href="#reviews"     class="nav-a" data-sec="reviews">Reviews</a>
         <a href="#pricing"  class="nav-a" data-sec="pricing">Pricing</a>
         <a href="/download" class="nav-a">Download</a>
         <a href="#pricing"  class="nav-btn">Get Marrow — $20</a>
@@ -835,9 +836,9 @@
     </div>
 
     <div class="reveal d1">
-      <h1 class="hero-h1">Every item you own,<br><span class="grad">beautifully catalogued.</span></h1>
+      <h1 class="hero-h1">The collection app<br>for <span class="grad">serious collectors.</span></h1>
       <p class="hero-sub">
-        Scan a barcode. Get the metadata. Know the real market value.<br>
+        Scan barcodes. Auto-fill metadata. Track live eBay market values.<br>
         <em>Local-first. No cloud. No subscription. Ever.</em>
       </p>
     </div>
@@ -1084,6 +1085,25 @@
           <tbody id="cmpBody"></tbody>
         </table>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COLLECTION TYPES ── -->
+<section id="collections" style="padding:100px 0;background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);position:relative;overflow:hidden;">
+  <div class="wrap z10">
+    <div class="sec-head reveal">
+      <p class="eyebrow-pill">✦ 13 Collection Types</p>
+      <h2 class="h2">Built for every kind<br>of <span class="grad">physical collection.</span></h2>
+      <p class="sec-sub">Whether you collect books or bourbon, Marrow has deep, type-specific metadata for all of it.</p>
+    </div>
+    <div id="typeGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:48px;"></div>
+    <!-- SEO: hidden keyword-rich content for crawlers -->
+    <div style="margin-top:72px;max-width:800px;margin-left:auto;margin-right:auto;">
+      <h2 style="font-size:clamp(1.4rem,2.5vw,2rem);font-weight:800;color:#fff;letter-spacing:-.03em;text-align:center;margin-bottom:16px;">
+        The best collection cataloging app for every type of collector
+      </h2>
+      <div style="display:grid;gap:14px;" id="collectorTypes"></div>
     </div>
   </div>
 </section>
@@ -1395,6 +1415,46 @@ async function doCheckout(e){
     window.location.href=data.url;
   }catch{ err.textContent='Network error. Check your connection.'; err.style.display='block'; btn.textContent='Continue to Payment — $20 →'; btn.disabled=false; }
 }
+
+// ── COLLECTION TYPES GRID ────────────────────────────────────────────────────
+const typeData = [
+  {e:"📚",n:"Books",d:"ISBN lookup, genre, binding, page count"},
+  {e:"🎵",n:"Vinyl & Music",d:"Discogs import, catalog numbers, pressings"},
+  {e:"🎮",n:"Video Games",d:"Platform, region, RAWG & IGDB metadata"},
+  {e:"🎬",n:"Movies & TV",d:"TMDB/OMDB, runtime, format, region code"},
+  {e:"🎲",n:"Board Games",d:"BGG ratings, player count, play time"},
+  {e:"🃏",n:"Trading Cards",d:"TCGPlayer pricing, grade, set"},
+  {e:"💬",n:"Comics",d:"Issue, volume, condition, key issues"},
+  {e:"🍷",n:"Spirits & Wine",d:"Distillery, vintage, ABV"},
+  {e:"🪙",n:"Coins",d:"Mint year, grade, denomination"},
+  {e:"📮",n:"Stamps",d:"Country, year, perforation, condition"},
+  {e:"👕",n:"Clothing",d:"Brand, size, era, condition"},
+  {e:"🏺",n:"Housewares",d:"Maker, era, material, value"},
+  {e:"🌱",n:"Plants",d:"Species, care notes, acquisition date"},
+];
+const tg = document.getElementById('typeGrid');
+typeData.forEach(t => {
+  tg.innerHTML += `<div style="padding:18px 16px;border-radius:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);text-align:center;transition:border-color .2s,transform .2s;cursor:default" onmouseenter="this.style.borderColor='rgba(91,82,240,.25)';this.style.transform='translateY(-3px)'" onmouseleave="this.style.borderColor='rgba(255,255,255,.06)';this.style.transform=''">
+    <div style="font-size:28px;margin-bottom:8px">${t.e}</div>
+    <div style="font-size:13px;font-weight:700;color:#e0e0f0;margin-bottom:4px">${t.n}</div>
+    <div style="font-size:11px;color:#30305a;line-height:1.4">${t.d}</div>
+  </div>`;
+});
+
+// ── COLLECTOR TYPE SEO BLOCKS ─────────────────────────────────────────────────
+const collectorBlocks = [
+  {h:"Best book cataloging app",         t:"Scan the ISBN and Marrow pulls title, author, genre, page count, and cover art from OpenLibrary and Google Books. Track which books you've read, loaned out, or want to read. Works offline — no Goodreads account needed."},
+  {h:"Best vinyl record cataloging app", t:"Import your entire Discogs collection in one click. Get catalog numbers, pressing details, labels, and matrix numbers. eBay sold-listing values show what your records are actually worth — not wishful asking prices."},
+  {h:"Best video game collection tracker",t:"Scan any cartridge or disc barcode and get platform, region, genre, and current eBay market value. Supports retro games (NES, SNES, N64, PS1, PS2) through modern titles. Track box, manual, and seal condition separately."},
+  {h:"Best board game cataloging app",   t:"BoardGameGeek metadata fills in automatically — player count, play time, age rating, and BGG score. Track condition, storage box, and loan status. Great for large collections where tracking what you own and where it is matters."},
+];
+const ct = document.getElementById('collectorTypes');
+collectorBlocks.forEach(b => {
+  ct.innerHTML += `<div style="padding:22px 24px;border-radius:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.055);">
+    <h3 style="font-size:15px;font-weight:700;color:#c7d2fe;margin-bottom:8px">${b.h}</h3>
+    <p style="font-size:14px;color:#6060a0;line-height:1.7">${b.t}</p>
+  </div>`;
+});
 
 // ── SCROLL REVEAL ─────────────────────────────────────────────────────────────
 const ro = new IntersectionObserver(entries => {

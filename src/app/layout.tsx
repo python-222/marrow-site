@@ -138,6 +138,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" style={{ background: "#02020a", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
       <head>
         <meta name="theme-color" content="#02020a" />
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        <meta name="author" content="Marrow Library" />
+        <meta name="copyright" content="Marrow Library 2026" />
+        <meta name="rating" content="general" />
+        <meta name="revisit-after" content="7 days" />
+        <meta property="og:locale" content="en_US" />
+        <meta name="application-name" content="Marrow Library" />
+        <meta name="msapplication-TileColor" content="#5b52f0" />
         {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-EF1S0V31MJ" />
         <script

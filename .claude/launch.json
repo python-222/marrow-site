@@ -1,1 +1,11 @@
-{"version":"0.0.1","configurations":[{"name":"marrow-site","runtimeExecutable":"npm","runtimeArgs":["run","dev"],"port":3001,"cwd":"C:\\Users\\zerya\\marrow-site"}]}
+﻿{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "marrow-html",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-p", "4321", "."],
+      "port": 4321
+    }
+  ]
+}

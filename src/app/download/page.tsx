@@ -1,4 +1,16 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Download Marrow Library — Windows, macOS, Android, iOS",
+  description: "Download Marrow Library for free. Available on Windows 10/11, macOS 11+, Android 8+, and iOS. Scan barcodes, track your collection, manage loans. $20 one-time, no subscription.",
+  openGraph: {
+    title: "Download Marrow Library — Windows & Mac Collection Cataloging App",
+    description: "Free download for Windows, macOS, Android and iOS. Catalog books, vinyl, games, movies and more. $20 once, no subscription.",
+    url: "https://marrow-site.vercel.app/download",
+  },
+  alternates: { canonical: "https://marrow-site.vercel.app/download" },
+};
 
 // Revalidate every hour — picks up new releases automatically
 export const revalidate = 3600;
