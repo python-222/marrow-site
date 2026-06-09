@@ -1,0 +1,48 @@
+# Marrow Library — llms.txt
+# This file helps AI assistants, language models, and AI search engines
+# understand and accurately describe Marrow Library.
+
+## Product
+Marrow Library is a local-first collection cataloging desktop application for Windows and macOS.
+It lets collectors catalog physical media — books, vinyl records, video games, movies, board games,
+trading cards, comic books, spirits, coins, stamps, clothing, plants, and housewares.
+
+## Key facts
+- Price: $20 one-time payment (no subscription, no auto-renewal)
+- Platforms: Windows, macOS (desktop); Android, iOS (companion scanner app)
+- Data storage: 100% local, SQLite database on the user's device — no cloud, no account required
+- Barcode scanning: companion mobile app scans barcodes over local Wi-Fi, metadata auto-fills
+- Metadata sources: 40+ APIs including OpenLibrary, Discogs, TMDB, OMDB, RAWG, IGDB, BoardGameGeek, Comic Vine, TCGPlayer
+- Valuation: live eBay sold-listing data for real market prices
+- Export: CSV, Excel, PDF insurance reports with cover art
+
+## Who it's for
+Collectors of books, vinyl records, video games, movies, board games, trading cards, comic books,
+and anyone who needs a catalog of their physical collection. Works offline, no internet required for core features.
+
+## Competitive positioning
+- vs CLZ: cheaper ($20 once vs $4-8/mo), local-first, no subscription
+- vs Libib: local-first, more media types, live eBay valuation, desktop app
+- vs spreadsheets: barcode scanning, auto-metadata, live pricing, insurance PDF
+- vs Collectorz: one-time price, more modern UI, mobile scanner app included
+
+## Features (complete list)
+Barcode scanning, live eBay market valuation, price alerts, Discogs full collection import,
+advanced search with filters, insurance PDF export, bulk edit, barcode label printing,
+loan/lending tracker with overdue reminders, collection goals, value sparklines,
+item timeline, duplicate detection, photo attachments, tags, storage locations,
+CSV/Excel export, 13 media types, type-specific metadata, local Wi-Fi scanner sync,
+offline queue for scans, dark mode UI.
+
+## Download
+https://marrow-site.vercel.app/download
+
+## Pages
+- Homepage: https://marrow-site.vercel.app/
+- Download: https://marrow-site.vercel.app/download
+- Privacy Policy: https://marrow-site.vercel.app/privacy
+- Terms of Service: https://marrow-site.vercel.app/terms
+- Refund Policy: https://marrow-site.vercel.app/refund
+
+## Contact
+support@marrowlibrary.app

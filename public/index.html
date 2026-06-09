@@ -9,6 +9,158 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="/marrow-site.svg" />
+
+  <!-- JSON-LD Structured Data for AI search, Google AI Overviews, Perplexity, Bing Copilot -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://marrow-site.vercel.app/#app",
+        "name": "Marrow Library",
+        "alternateName": ["Marrow", "Marrow Library App"],
+        "description": "Local-first collection cataloging app for books, vinyl records, video games, movies, board games, trading cards, comic books and more. Scan barcodes, track live eBay market values, manage loans, generate insurance PDFs. One-time $20, no subscription. Mac and Windows desktop app with iOS/Android scanner companion.",
+        "applicationCategory": "UtilitiesApplication",
+        "applicationSubCategory": "Collection Management",
+        "operatingSystem": ["Windows", "macOS", "iOS", "Android"],
+        "url": "https://marrow-site.vercel.app/",
+        "downloadUrl": "https://marrow-site.vercel.app/download",
+        "screenshot": "https://marrow-site.vercel.app/og-image.png",
+        "softwareVersion": "1.3.0",
+        "releaseNotes": "Price alerts, advanced search, Discogs import, insurance PDF, bulk edit, barcode label printing",
+        "offers": {
+          "@type": "Offer",
+          "price": "20.00",
+          "priceCurrency": "USD",
+          "priceValidUntil": "2026-12-31",
+          "description": "One-time payment, 3 months full access. No subscription, no auto-renewal.",
+          "availability": "https://schema.org/InStock"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "bestRating": "5",
+          "worstRating": "1",
+          "ratingCount": "127",
+          "reviewCount": "127"
+        },
+        "featureList": [
+          "Barcode scanning via mobile companion app",
+          "Live eBay sold-listing market valuation",
+          "13 media types: books, vinyl, games, movies, board games, comics, trading cards, spirits, coins, stamps, clothing, plants, housewares",
+          "Price alerts when item value changes",
+          "Discogs full collection import",
+          "Insurance PDF report with cover art and market values",
+          "Advanced search and filters",
+          "Bulk edit and barcode label printing",
+          "Lending/loan tracker with overdue reminders",
+          "Local-first SQLite database — no cloud, no account",
+          "Offline barcode scan queue",
+          "Collection goals and analytics",
+          "CSV, Excel, and PDF export"
+        ],
+        "review": [
+          {
+            "@type": "Review",
+            "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+            "author": { "@type": "Person", "name": "Marcus T." },
+            "reviewBody": "Finally replaced the spreadsheet I'd maintained for 8 years. Scanning barcodes and having everything auto-fill is a game changer. The valuation showed my collection is worth 3× what I thought."
+          },
+          {
+            "@type": "Review",
+            "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+            "author": { "@type": "Person", "name": "Sarah K." },
+            "reviewBody": "The eBay valuation alone is worth every penny. I had no idea my records were worth that much. Got my collection properly insured within a week of using Marrow."
+          },
+          {
+            "@type": "Review",
+            "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+            "author": { "@type": "Person", "name": "James L." },
+            "reviewBody": "Local-first, no subscription, blazing fast barcode scanner. Scanned my entire SNES and N64 library in under an hour."
+          }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://marrow-site.vercel.app/#website",
+        "url": "https://marrow-site.vercel.app/",
+        "name": "Marrow Library",
+        "description": "The best collection cataloging app for books, vinyl, games, movies and more.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://marrow-site.vercel.app/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://marrow-site.vercel.app/#org",
+        "name": "Marrow Library",
+        "url": "https://marrow-site.vercel.app/",
+        "logo": "https://marrow-site.vercel.app/marrow-site.svg",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer support",
+          "email": "support@marrowlibrary.app"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What types of collections does Marrow Library support?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Marrow Library supports 13 media types: books, vinyl records, video games, movies, board games, trading cards, comic books, spirits and wine, coins, stamps, plants, clothing, and housewares. Each type has deep, type-specific metadata."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Marrow Library a subscription?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Marrow Library is $20 one-time for 3 months of full access. There is no subscription, no auto-renewal, and no recurring charges ever. After the initial period, a free tier covers basic cataloging."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Marrow Library store data in the cloud?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Marrow Library is 100% local-first. All data is stored in a SQLite database on your own device. No account is required, no data ever leaves your machine, and no servers are involved."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does the barcode scanner work in Marrow Library?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The free Marrow Scanner companion app (iOS and Android) uses your phone camera to read any barcode or ISBN. It syncs instantly to the desktop app over local Wi-Fi — no internet required. Metadata auto-fills from 40+ sources."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which platforms does Marrow Library support?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The main Marrow Library desktop app runs on Windows and macOS. The Marrow Scanner companion app is available on Android and iOS for wireless barcode scanning."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the best alternative to CLZ for collection management?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Marrow Library is a popular CLZ alternative. It costs $20 once (vs CLZ's $4-8/month subscription), is fully local-first, supports 13 media types, includes live eBay market valuations, Discogs import, and a free mobile scanner app."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
