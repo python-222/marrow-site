@@ -683,6 +683,60 @@
     .chip-g { background: rgba(16,185,129,.07); color: #34d399; border: 1px solid rgba(16,185,129,.14); }
     .chip-i { background: rgba(99,102,241,.07); color: #818cf8; border: 1px solid rgba(99,102,241,.14); }
 
+    /* ── HOW IT WORKS ── */
+    #how {
+      padding: 100px 0; position: relative; overflow: hidden;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+    }
+    .how-grid { display: grid; gap: 2px; margin-top: 56px; }
+    @media(min-width:768px){ .how-grid{ grid-template-columns: 1fr 1fr 1fr; gap: 0; } }
+    .how-step {
+      position: relative; padding: 36px 32px;
+      background: rgba(255,255,255,.015); border: 1px solid rgba(255,255,255,.055);
+      transition: background .3s, border-color .3s;
+    }
+    .how-step:first-child { border-radius: 16px 0 0 16px; }
+    .how-step:last-child  { border-radius: 0 16px 16px 0; }
+    @media(max-width:767px){
+      .how-step:first-child { border-radius: 16px 16px 0 0; }
+      .how-step:last-child  { border-radius: 0 0 16px 16px; }
+    }
+    .how-step:hover { background: rgba(91,82,240,.04); border-color: rgba(91,82,240,.22); }
+    .how-num {
+      font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ind2); margin-bottom: 18px; display: flex; align-items: center; gap: 8px;
+    }
+    .how-num::before {
+      content: attr(data-n); width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(91,82,240,.15); border: 1px solid rgba(91,82,240,.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 900; color: #a5b4fc; flex-shrink: 0;
+      line-height: 1;
+    }
+    .how-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+    .how-h { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -.02em; margin-bottom: 10px; }
+    .how-p { font-size: 14px; color: var(--sub); line-height: 1.7; }
+    .how-arrow {
+      position: absolute; right: -14px; top: 50%; transform: translateY(-50%);
+      width: 28px; height: 28px; border-radius: 50%; z-index: 2;
+      background: var(--bg2); border: 1px solid rgba(91,82,240,.25);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ind2); font-size: 12px;
+    }
+    @media(max-width:767px){ .how-arrow { display: none; } }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 24px;
+      padding: 22px 32px; border-radius: 16px;
+      background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.055);
+      margin-top: 52px;
+    }
+    .trust-item { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; color: var(--dim); white-space: nowrap; }
+    .trust-item svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--green); }
+    .trust-sep { width: 1px; height: 18px; background: rgba(255,255,255,.06); }
+    @media(max-width:640px){ .trust-sep { display: none; } }
+
     /* ── UTILS ── */
     .z10 { position: relative; z-index: 10; }
     .tc  { text-align: center; }
@@ -799,7 +853,7 @@
         <span class="brand-name">Marrow</span>
       </a>
       <div class="nav-links">
-        <a href="#story"    class="nav-a" data-sec="story">About</a>
+        <a href="#how"         class="nav-a" data-sec="how">How it works</a>
         <a href="#features"    class="nav-a" data-sec="features">Features</a>
         <a href="#collections" class="nav-a" data-sec="collections">Collections</a>
         <a href="#reviews"     class="nav-a" data-sec="reviews">Reviews</a>
@@ -948,6 +1002,66 @@
   </div>
 </section>
 
+<!-- ── HOW IT WORKS ── -->
+<section id="how">
+  <div class="wrap z10">
+    <div class="sec-head reveal">
+      <p class="eyebrow-pill">✦ How it works</p>
+      <h2 class="h2">From shelf to spreadsheet<br><span class="grad">in under a minute.</span></h2>
+    </div>
+    <div class="how-grid reveal">
+      <div class="how-step">
+        <div class="how-arrow">›</div>
+        <div class="how-num" data-n="1">Scan</div>
+        <span class="how-icon">📱</span>
+        <div class="how-h">Point. Scan. Done.</div>
+        <p class="how-p">Open the Marrow Scanner on your phone. Point it at any barcode or ISBN. No typing, no searching. Works on books, games, vinyl, movies — everything.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-arrow">›</div>
+        <div class="how-num" data-n="2">Auto-fill</div>
+        <span class="how-icon">⚡</span>
+        <div class="how-h">Metadata appears instantly.</div>
+        <p class="how-p">Title, creator, cover art, format, genre, release year — pulled from 40+ APIs in milliseconds. Synced to your desktop over local Wi-Fi. No internet needed.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num" data-n="3">Know the value</div>
+        <span class="how-icon">📈</span>
+        <div class="how-h">See what it's actually worth.</div>
+        <p class="how-p">Live eBay sold-listing prices — not wishful asking prices. Real money, real condition, your exact item. Updated automatically. Print an insurance PDF in one click.</p>
+      </div>
+    </div>
+
+    <!-- Trust bar -->
+    <div class="trust-bar reveal">
+      <div class="trust-item">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        No account required
+      </div>
+      <div class="trust-sep"></div>
+      <div class="trust-item">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        Works 100% offline
+      </div>
+      <div class="trust-sep"></div>
+      <div class="trust-item">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        Your data never leaves your device
+      </div>
+      <div class="trust-sep"></div>
+      <div class="trust-item">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        No subscription, ever
+      </div>
+      <div class="trust-sep"></div>
+      <div class="trust-item">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        3-month free trial
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="sec-div"></div>
 <!-- ── STORY ── -->
 <section id="story">
@@ -958,9 +1072,9 @@
         <p class="eyebrow-pill">✦ Why Marrow</p>
         <h2 class="h2">Built for collectors who<br><span class="grad">actually care.</span></h2>
         <div class="story-body">
-          <p>Spreadsheets collapse when you own thousands of items. Other apps lock your data in the cloud and charge monthly <em>forever</em>. Marrow does neither.</p>
-          <p>Everything runs locally on your machine. Scan with your phone, manage on your desktop, export any time. <em>No account. No subscription. No hostage situation.</em></p>
-          <p>Live eBay sold-listing data means you always know the real-world value of your collection — not wishful asking prices.</p>
+          <p>You spent years — and thousands of dollars — building your collection. You deserve to know what it's actually worth. Not a guess. <em>Real sold prices, from real buyers, for real items in your condition.</em></p>
+          <p>Other apps charge monthly forever and keep your data hostage in the cloud. Marrow runs entirely on your machine — scan with your phone, manage on your desktop, export whenever you want. <em>No account. No subscription. No cloud. No nonsense.</em></p>
+          <p>When you finally scan everything in, most collectors are shocked. Their collection is worth 2–3× what they thought. The insurance PDF takes one click.</p>
         </div>
       </div>
       <div class="stat-cards reveal d2">
@@ -1113,17 +1227,20 @@
   <div class="cta-orb"></div>
   <div class="cta-grid"></div>
   <div class="cta-inner">
-    <div class="badge badge-indigo reveal">✦ $20 · One-Time · 3 Months Access</div>
-    <h2 class="cta-h2 reveal d1">Your collection deserves<br><span class="grad">better than a spreadsheet.</span></h2>
-    <p class="cta-sub reveal d2">$20 once. 3 months full access. No subscription, no auto-renewal, no surprises.</p>
+    <div class="badge badge-amber reveal"><span class="dot-amber"></span>Launch price — $20 once, 3 months full access</div>
+    <h2 class="cta-h2 reveal d1">Stop wondering what<br><span class="grad">your collection is worth.</span></h2>
+    <p class="cta-sub reveal d2">Scan everything once. Know every value. Own your data forever. No spreadsheet, no cloud, no subscription.</p>
     <div class="cta-row reveal d3">
       <a href="#pricing" class="btn-main">
-        Get Marrow Library — $20
+        Get Marrow — $20 one-time
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
       </a>
-      <a href="/download" class="btn-ghost">Download Free Trial</a>
+      <a href="/download" class="btn-ghost">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Try free for 3 months
+      </a>
     </div>
-    <p class="cta-fine reveal d4">3-month free trial · No credit card required</p>
+    <p class="cta-fine reveal d4">3-month free trial · No credit card · No auto-renewal</p>
   </div>
 </section>
 
