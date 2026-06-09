@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="/marrow-site.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -540,6 +541,96 @@
       #story, #features, #reviews, #pricing, #cta { padding: 80px 0; }
       .wrap, .wrap-md { padding: 0 20px; }
     }
+
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      opacity: .028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ── SHIMMER CTA ── */
+    .btn-main {
+      position: relative; overflow: hidden;
+    }
+    .btn-main::before {
+      content: ''; position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+      transform: skewX(-15deg);
+      animation: shimmer 3.2s ease-in-out infinite;
+    }
+    @keyframes shimmer { 0%{left:-120%} 60%,100%{left:160%} }
+
+    /* ── ENHANCED HERO H1 ── */
+    .hero-h1 { text-shadow: 0 0 80px rgba(91,82,240,.15); }
+
+    /* ── SCAN LINE in mockup ── */
+    .mock-scan-line {
+      position: absolute; left: 0; right: 0; height: 2px; pointer-events: none;
+      background: linear-gradient(90deg, transparent 0%, rgba(91,82,240,.7) 20%, rgba(165,180,252,.9) 50%, rgba(91,82,240,.7) 80%, transparent 100%);
+      box-shadow: 0 0 12px rgba(91,82,240,.8), 0 0 24px rgba(91,82,240,.4);
+      animation: scanDown 2.8s cubic-bezier(.4,0,.6,1) infinite;
+      z-index: 5;
+    }
+    @keyframes scanDown {
+      0%   { top: 0%;   opacity: 0; }
+      5%   { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    /* ── FEATURE GRID: 2-col featured first row ── */
+    .fc.fc-wide {
+      grid-column: span 2;
+      flex-direction: row; align-items: flex-start; gap: 24px;
+    }
+    .fc.fc-wide .fc-icon { width: 52px; height: 52px; flex-shrink: 0; margin-top: 3px; }
+    @media(max-width:639px){ .fc.fc-wide { grid-column: span 1; flex-direction: column; } }
+
+    /* ── GRADIENT EYEBROW PILL ── */
+    .eyebrow-pill {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 5px 16px; border-radius: 999px; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .1em;
+      background: rgba(91,82,240,.08); border: 1px solid rgba(91,82,240,.2);
+      color: var(--ind3); margin-bottom: 18px;
+    }
+
+    /* ── FLOATING SPARKLES in hero ── */
+    .sparkle {
+      position: absolute; width: 3px; height: 3px; border-radius: 50%;
+      background: rgba(165,180,252,.7); pointer-events: none;
+      animation: twinkle var(--dur,4s) ease-in-out var(--del,0s) infinite;
+    }
+    @keyframes twinkle { 0%,100%{opacity:0;transform:scale(.5)} 50%{opacity:1;transform:scale(1)} }
+
+    /* ── SECTION DIVIDERS ── */
+    .sec-div {
+      height: 1px; margin: 0;
+      background: linear-gradient(90deg, transparent, rgba(91,82,240,.15) 30%, rgba(91,82,240,.15) 70%, transparent);
+    }
+
+    /* ── REVIEW QUOTE MARK ── */
+    .rc-quote { font-size: 48px; line-height: 1; color: rgba(91,82,240,.15); font-family: Georgia,serif; margin-bottom: -10px; }
+
+    /* ── BETTER STATS ── */
+    .s-stat { position: relative; padding: 28px 24px; border-radius: var(--r); background: rgba(255,255,255,.015); border: 1px solid rgba(255,255,255,.05); transition: border-color .3s, transform .3s; }
+    .s-stat:hover { border-color: rgba(91,82,240,.2); transform: translateY(-3px); }
+
+    /* ── TYPED CURSOR ── */
+    .typed-cursor { display: inline-block; width: 2px; height: .85em; background: var(--ind3); margin-left: 3px; vertical-align: middle; animation: blink .9s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ── PLATFORM CHIPS ENHANCED ── */
+    .plat svg { width: 14px; height: 14px; }
+
+    /* ── MOBILE TOUCH TARGETS ── */
+    @media(max-width:640px){
+      .btn-main, .btn-ghost { width: 100%; justify-content: center; }
+      .cta-row { flex-direction: column; }
+      .fc.fc-wide { grid-column: span 1; }
+    }
   </style>
 </head>
 <body>
@@ -592,9 +683,9 @@
     </div>
 
     <div class="reveal d1">
-      <h1 class="hero-h1">Your collection,<br><span class="grad">finally organised.</span></h1>
+      <h1 class="hero-h1">Every item you own,<br><span class="grad">beautifully catalogued.</span></h1>
       <p class="hero-sub">
-        Scan barcodes. Fetch metadata. Track live market value.<br>
+        Scan a barcode. Get the metadata. Know the real market value.<br>
         <em>Local-first. No cloud. No subscription. Ever.</em>
       </p>
     </div>
@@ -647,7 +738,8 @@
         <div class="mock-title"><div class="mock-pill">✦ Marrow Library</div></div>
         <div class="mock-val">$2,841</div>
       </div>
-      <div class="mock-body">
+      <div class="mock-body" style="position:relative">
+        <div class="mock-scan-line"></div>
         <div class="mock-side">
           <div class="s-item on"><span>▦ Collection</span><span class="s-badge" style="background:rgba(91,82,240,.2);color:#818cf8">847</span></div>
           <div class="s-item off"><span>⊕ Add Item</span></div>
@@ -678,6 +770,7 @@
   </div>
 </section>
 
+<div class="sec-div"></div>
 <!-- ── STATS ── -->
 <section id="stats">
   <div class="wrap">
@@ -702,13 +795,14 @@
   </div>
 </section>
 
+<div class="sec-div"></div>
 <!-- ── STORY ── -->
 <section id="story">
   <div class="story-orb"></div>
   <div class="wrap rel z10">
     <div class="story-layout">
       <div class="reveal">
-        <p class="eyebrow">Why Marrow</p>
+        <p class="eyebrow-pill">✦ Why Marrow</p>
         <h2 class="h2">Built for collectors who<br><span class="grad">actually care.</span></h2>
         <div class="story-body">
           <p>Spreadsheets collapse when you own thousands of items. Other apps lock your data in the cloud and charge monthly <em>forever</em>. Marrow does neither.</p>
@@ -754,7 +848,7 @@
   <div class="feat-orb"></div>
   <div class="wrap z10">
     <div class="sec-head reveal">
-      <p class="eyebrow">Features</p>
+      <p class="eyebrow-pill">✦ Features</p>
       <h2 class="h2">Everything you need.<br><span class="grad">Nothing you don't.</span></h2>
       <p class="sec-sub">Purpose-built for collectors. Every feature earns its place.</p>
     </div>
@@ -767,7 +861,7 @@
   <div class="rev-orb"></div>
   <div class="wrap z10">
     <div class="sec-head reveal">
-      <p class="eyebrow">Reviews</p>
+      <p class="eyebrow-pill">✦ Reviews</p>
       <h2 class="h2">Loved by collectors <span class="grad">worldwide.</span></h2>
       <div class="rating-row" style="margin-top:16px">
         <div class="stars">★★★★★</div>
@@ -794,7 +888,7 @@
   <div class="p-grid"></div>
   <div class="wrap-md z10">
     <div class="sec-head reveal" style="margin-bottom:64px">
-      <p class="eyebrow">Pricing</p>
+      <p class="eyebrow-pill">✦ Pricing</p>
       <h2 class="h2">One price.<br><span class="grad">Everything included.</span></h2>
       <p style="color:var(--sub);font-size:16px">$20 once. 3 months full access. No subscription, ever.</p>
     </div>
@@ -916,6 +1010,34 @@
 </footer>
 
 <script>
+// ── SPARKLES ─────────────────────────────────────────────────────────────────
+(function(){
+  const hero = document.getElementById('hero');
+  for(let i=0;i<18;i++){
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.cssText = `left:${Math.random()*100}%;top:${20+Math.random()*65}%;--dur:${3+Math.random()*4}s;--del:${Math.random()*4}s`;
+    hero.appendChild(s);
+  }
+})();
+
+// ── TYPED HERO HEADLINE ───────────────────────────────────────────────────────
+(function(){
+  const words = ['catalogued.','organised.','valued.','tracked.'];
+  let wi = 0, ci = 0, del = false;
+  const el = document.querySelector('.hero-h1 .grad');
+  if(!el) return;
+  el.innerHTML = '';
+  const cur = document.createElement('span'); cur.className='typed-cursor'; el.after(cur);
+  function tick(){
+    const word = words[wi];
+    if(!del){ el.textContent = word.slice(0,++ci); if(ci===word.length){ del=true; setTimeout(tick,2200); return; } }
+    else     { el.textContent = word.slice(0,--ci); if(ci===0){ del=false; wi=(wi+1)%words.length; } }
+    setTimeout(tick, del ? 55 : 90);
+  }
+  tick();
+})();
+
 // ── DATA ──────────────────────────────────────────────────────────────────────
 const mTypes = ["Books","Vinyl Records","Video Games","Movies & TV","Board Games","Trading Cards","Comics","Spirits & Wine","Coins","Stamps","Plants","Clothing","Housewares"];
 
@@ -1001,7 +1123,8 @@ mockItems.forEach(x => {
 const fg = document.getElementById('featGrid');
 feats.forEach((f,i) => {
   const d = document.createElement('div');
-  d.className = `fc reveal ${i%3===1?'d1':i%3===2?'d2':''}`;
+  const wide = i < 2; // first 2 cards span full width
+  d.className = `fc ${wide?'fc-wide':''} reveal ${i%3===1?'d1':i%3===2?'d2':''}`;
   d.style.setProperty('--fc-bg', f.bg);
   d.innerHTML = `
     <div class="fc-icon" style="background:${f.bg};color:${f.a};border:1px solid ${f.a}22">${f.icon}</div>
@@ -1021,8 +1144,8 @@ revs.forEach((r,i) => {
   const d=document.createElement('div');
   d.className=`rc reveal ${i%3===1?'d1':i%3===2?'d2':''}`;
   d.innerHTML=`
-    <div class="stars">★★★★★</div>
-    <p class="rc-body">"${r.t}"</p>
+    <div class="rc-quote">"</div>
+    <p class="rc-body">${r.t}</p>
     <div class="rc-foot">
       <div class="rav" style="background:hsl(${r.h},40%,20%)">${r.av}</div>
       <div><p class="rc-name">${r.n}</p><p class="rc-role">${r.r}</p></div>
