@@ -20,7 +20,7 @@ const REPO = "fullstackdeveloper829-creator/marrow-library";
 // ── Known-good fallback: last confirmed stable release ────────────────────────
 // Update these whenever a new release is published to GitHub.
 // Used when the GitHub API is unavailable (e.g. private repo, rate limit).
-const STABLE_VERSION = "v1.2.1";
+const STABLE_VERSION = "v1.3.2";
 const STABLE_BASE    = `https://github.com/${REPO}/releases/download/${STABLE_VERSION}`;
 const STABLE_ASSETS  = {
   windows: { url: `${STABLE_BASE}/MarrowLibrary-${STABLE_VERSION}-windows-setup.exe`, size: 27_800_000 },
