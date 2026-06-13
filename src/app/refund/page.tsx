@@ -3,8 +3,16 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Refund Policy",
-  description: "Marrow Library offers a 14-day no-questions-asked full refund on Pro licenses. If you're not satisfied, email us for an instant refund.",
+  description: "Marrow Library offers a 14-day no-questions-asked full refund. Not satisfied? Email us for an instant refund — no questions asked.",
   robots: { index: true, follow: true },
+  alternates: { canonical: "https://marrow-site.vercel.app/refund" },
+  openGraph: {
+    title: "Refund Policy | Marrow Library",
+    description: "14-day no-questions-asked full refund on all purchases. Email us and get an instant refund.",
+    url: "https://marrow-site.vercel.app/refund",
+    images: [{ url: "https://marrow-site.vercel.app/og-image.png" }],
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 const EMAIL = "fullstackdeveloper829@gmail.com";

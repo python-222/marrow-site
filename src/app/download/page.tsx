@@ -2,12 +2,13 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Download Marrow Library — Windows, macOS, Android, iOS",
-  description: "Download Marrow Library for free. Available on Windows 10/11, macOS 11+, Android 8+, and iOS. Scan barcodes, track your collection, manage loans. $20 one-time, no subscription.",
+  title: "Download Marrow Library — Windows, macOS, Android & iOS",
+  description: "Download Marrow Library free. Windows 10/11, macOS 11+, Android 8+, iOS. Scan barcodes, track values, manage loans. $20 one-time, no subscription.",
   openGraph: {
-    title: "Download Marrow Library — Windows & Mac Collection Cataloging App",
-    description: "Free download for Windows, macOS, Android and iOS. Catalog books, vinyl, games, movies and more. $20 once, no subscription.",
+    title: "Download Marrow Library — Windows, macOS, Android & iOS",
+    description: "Download free. Catalog books, vinyl, games, movies & more. $20 once, no subscription. Mac, Windows, Android, iOS.",
     url: "https://marrow-site.vercel.app/download",
+    images: [{ url: "https://marrow-site.vercel.app/og-image.png", width: 1200, height: 630 }],
   },
   alternates: { canonical: "https://marrow-site.vercel.app/download" },
 };

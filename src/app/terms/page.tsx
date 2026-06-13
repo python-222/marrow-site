@@ -3,11 +3,17 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "Terms of Service for Marrow Library — the collection cataloging app for books, vinyl, games & more. One-time purchase, no subscription, 14-day refund policy.",
+  description: "Terms of Service for Marrow Library. One-time purchase, no subscription, 14-day refund policy. Local-first collection cataloging app.",
   robots: { index: true, follow: true },
+  alternates: { canonical: "https://marrow-site.vercel.app/terms" },
+  openGraph: {
+    title: "Terms of Service | Marrow Library",
+    description: "One-time purchase, no subscription, 14-day refund policy. Local-first collection cataloging app.",
+    url: "https://marrow-site.vercel.app/terms",
+    images: [{ url: "https://marrow-site.vercel.app/og-image.png" }],
+  },
+  twitter: { card: "summary_large_image" },
 };
-
-const SITE = "https://marrow-library-marketing-site.vercel.app";
 const EMAIL = "fullstackdeveloper829@gmail.com";
 const LAST_UPDATED = "30 May 2025";
 

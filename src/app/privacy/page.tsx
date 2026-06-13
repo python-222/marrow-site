@@ -4,6 +4,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "Marrow Library privacy policy — local-first, no cloud storage, no tracking. Your collection data never leaves your device.",
+  alternates: { canonical: "https://marrow-site.vercel.app/privacy" },
+  openGraph: {
+    title: "Privacy Policy | Marrow Library",
+    description: "Local-first, no cloud storage, no tracking. Your collection data never leaves your device.",
+    url: "https://marrow-site.vercel.app/privacy",
+    images: [{ url: "https://marrow-site.vercel.app/og-image.png" }],
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 const EMAIL = "fullstackdeveloper829@gmail.com";

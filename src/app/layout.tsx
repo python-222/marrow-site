@@ -6,11 +6,11 @@ const SITE_URL = "https://marrow-site.vercel.app";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Marrow Library — #1 Collection Cataloging App | Books, Vinyl, Games & More",
+    default: "Marrow Library — Catalog Your Collection",
     template: "%s | Marrow Library",
   },
   description:
-    "Marrow Library is the world's best app for cataloguing physical collections — books, vinyl records, video games, movies, board games, comics & more. Scan barcodes, track live eBay market values, manage everything offline. Mac, Windows, Android & iOS. One-time $20, no subscription ever.",
+    "Scan barcodes, track live eBay values, catalog books, vinyl, games, movies & more. One-time $20, no subscription. Local-first. Mac, Windows, Android & iOS.",
   keywords: [
     // Core global
     "collection cataloging app",
