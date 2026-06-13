@@ -113,6 +113,10 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     );
   }
 
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return NextResponse.redirect("https://marrow-site.vercel.app/#pricing");
+  }
+
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://marrow-site.vercel.app";
 
   const session = await stripe.checkout.sessions.create({

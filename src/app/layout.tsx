@@ -93,9 +93,9 @@ export const metadata: Metadata = {
     alternateLocale: ["en_GB", "en_AU", "en_CA", "en_IN", "en_SG", "en_NZ", "en_IE", "en_ZA"],
     url: SITE_URL,
     siteName: "Marrow Library",
-    title: "Marrow Library — #1 Collection Cataloging App | Books, Vinyl, Games & More",
+    title: "Marrow Library — Catalog Your Collection",
     description:
-      "Scan barcodes. Track live eBay values. Own your data. Catalog books, vinyl, games, movies and more — Mac, Windows, Android & iOS. Buy once, own forever. No subscription.",
+      "Scan barcodes, track live eBay values, catalog books, vinyl, games & more. One-time $20, no subscription. Local-first. Mac, Windows, Android & iOS.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Marrow Library — Collection Cataloging App" }],
   },
   twitter: {

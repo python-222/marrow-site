@@ -6,10 +6,11 @@ export const metadata: Metadata = {
   description: "Marrow Library privacy policy — local-first, no cloud storage, no tracking. Your collection data never leaves your device.",
   alternates: { canonical: "https://marrow-site.vercel.app/privacy" },
   openGraph: {
+    type: "website",
     title: "Privacy Policy | Marrow Library",
     description: "Local-first, no cloud storage, no tracking. Your collection data never leaves your device.",
     url: "https://marrow-site.vercel.app/privacy",
-    images: [{ url: "https://marrow-site.vercel.app/og-image.png" }],
+    images: [{ url: "https://marrow-site.vercel.app/og-image.png", width: 1200, height: 630 }],
   },
   twitter: { card: "summary_large_image" },
 };

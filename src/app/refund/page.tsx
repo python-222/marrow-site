@@ -7,10 +7,11 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: "https://marrow-site.vercel.app/refund" },
   openGraph: {
+    type: "website",
     title: "Refund Policy | Marrow Library",
     description: "14-day no-questions-asked full refund on all purchases. Email us and get an instant refund.",
     url: "https://marrow-site.vercel.app/refund",
-    images: [{ url: "https://marrow-site.vercel.app/og-image.png" }],
+    images: [{ url: "https://marrow-site.vercel.app/og-image.png", width: 1200, height: 630 }],
   },
   twitter: { card: "summary_large_image" },
 };

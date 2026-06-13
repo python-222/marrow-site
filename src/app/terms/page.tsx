@@ -7,10 +7,11 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: "https://marrow-site.vercel.app/terms" },
   openGraph: {
+    type: "website",
     title: "Terms of Service | Marrow Library",
     description: "One-time purchase, no subscription, 14-day refund policy. Local-first collection cataloging app.",
     url: "https://marrow-site.vercel.app/terms",
-    images: [{ url: "https://marrow-site.vercel.app/og-image.png" }],
+    images: [{ url: "https://marrow-site.vercel.app/og-image.png", width: 1200, height: 630 }],
   },
   twitter: { card: "summary_large_image" },
 };
