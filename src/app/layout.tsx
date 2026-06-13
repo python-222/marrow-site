@@ -148,6 +148,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="msapplication-TileColor" content="#5b52f0" />
         {/* Ahrefs Analytics */}
         <script async src="https://analytics.ahrefs.com/analytics.js" data-key="9Bj+g0yBYup0W6rW6XA41A" />
+        <script dangerouslySetInnerHTML={{ __html: `
+          var ahrefs_analytics_script = document.createElement('script');
+          ahrefs_analytics_script.async = true;
+          ahrefs_analytics_script.src = 'https://analytics.ahrefs.com/analytics.js';
+          ahrefs_analytics_script.setAttribute('data-key', '9Bj+g0yBYup0W6rW6XA41A');
+          document.getElementsByTagName('head')[0].appendChild(ahrefs_analytics_script);
+        `}} />
         {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-EF1S0V31MJ" />
         <script
