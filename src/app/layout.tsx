@@ -146,6 +146,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta property="og:locale" content="en_US" />
         <meta name="application-name" content="Marrow Library" />
         <meta name="msapplication-TileColor" content="#5b52f0" />
+        {/* Ahrefs Analytics */}
+        <script async src="https://analytics.ahrefs.com/analytics.js" data-key="9Bj+g0yBYup0W6rW6XA41A" />
         {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-EF1S0V31MJ" />
         <script
